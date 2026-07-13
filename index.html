@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Four Mirrors — Tradition Reader (Phase 1)</title>
+<style>
+  :root{
+    --night:#151226;
+    --panel:#201B38;
+    --line:#3A3260;
+    --star:#EFEAF7;
+    --dim:#9C93B8;
+    --gold:#E3B84A;
+    --sky:#7FB4D9;
+    --rose:#D97B8F;
+    --leaf:#8CBF9A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--night);color:var(--star);font-family:Georgia,'Times New Roman',serif;line-height:1.6;min-height:100vh}
+  .mono{font-family:'Courier New',monospace}
+  header{text-align:center;padding:30px 16px 20px;border-bottom:1px solid var(--line)}
+  header h1{font-weight:normal;font-size:1.6rem;letter-spacing:.08em}
+  header h1 b{color:var(--gold);font-weight:normal}
+  header p{color:var(--dim);font-size:.85rem;font-style:italic;margin-top:6px}
+  .phase{display:inline-block;margin-top:10px;font-family:'Courier New',monospace;font-size:.7rem;letter-spacing:.15em;color:var(--sky);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+  main{max-width:760px;margin:0 auto;padding:22px 14px 90px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px;margin-bottom:18px}
+  h2{font-size:1.1rem;font-weight:normal;letter-spacing:.04em;margin-bottom:4px}
+  h2 .trad{font-family:'Courier New',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:2px}
+  .hint{color:var(--dim);font-size:.84rem;margin-bottom:14px}
+  label{display:block;font-family:'Courier New',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:12px 0 4px}
+  input,select{width:100%;background:var(--night);color:var(--star);border:1px solid var(--line);border-radius:5px;padding:10px;font-family:Georgia,serif;font-size:.95rem}
+  input:focus,select:focus{outline:1px solid var(--gold)}
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  .row>*{flex:1;min-width:130px}
+  .btn{background:var(--gold);color:var(--night);border:none;border-radius:5px;padding:12px 22px;font-family:'Courier New',monospace;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;margin-top:18px}
+  .btn:focus-visible{outline:2px solid var(--star);outline-offset:2px}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.88rem}
+  th,td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
+  th{font-family:'Courier New',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:normal}
+  .term{border-bottom:1px dotted var(--dim);cursor:help}
+  .glossary{font-size:.82rem;color:var(--dim);border-left:2px solid var(--line);padding:8px 12px;margin:10px 0}
+  .glossary b{color:var(--sky);font-weight:normal}
+  .honesty{
+    margin-top:16px;border:1px solid var(--line);border-radius:6px;overflow:hidden
+  }
+  .honesty .hh{background:rgba(227,184,74,.08);padding:8px 14px;font-family:'Courier New',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+  .honesty .hb{padding:12px 14px;font-size:.86rem}
+  .honesty .hb p{margin-bottom:8px}
+  .honesty .hb p:last-child{margin-bottom:0}
+  .honesty .lbl{font-family:'Courier New',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .says{color:var(--leaf)} .cant{color:var(--rose)} .real{color:var(--sky)}
+  .big{font-size:1.3rem;color:var(--gold)}
+  .pill{display:inline-block;background:var(--night);border:1px solid var(--line);border-radius:20px;padding:4px 14px;margin:3px 4px 3px 0;font-size:.84rem}
+  .pill b{color:var(--gold);font-weight:normal}
+  .timeline{margin-top:8px}
+  .tl-row{display:flex;gap:10px;align-items:baseline;border-bottom:1px dashed var(--line);padding:7px 2px;font-size:.88rem}
+  .tl-row.now{background:rgba(227,184,74,.07)}
+  .tl-row .yrs{font-family:'Courier New',monospace;color:var(--dim);font-size:.76rem;white-space:nowrap;min-width:118px}
+  .tl-row .lord{color:var(--gold);min-width:70px}
+  .tl-row .gist{flex:1;color:var(--dim)}
+  .contradiction{border:1px solid var(--rose);border-radius:6px;padding:12px 14px;margin-top:14px;font-size:.88rem}
+  .contradiction .lbl{color:var(--rose);font-family:'Courier New',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:6px}
+  .accuracy{font-size:.78rem;color:var(--dim);font-style:italic;margin-top:10px}
+  .house{border:1px solid var(--line);border-radius:6px;margin-bottom:10px;overflow:hidden}
+  .house summary{cursor:pointer;padding:11px 14px;list-style:none;display:flex;gap:10px;align-items:baseline}
+  .house summary::-webkit-details-marker{display:none}
+  .house summary .hn{font-family:'Courier New',monospace;color:var(--dim);font-size:.72rem;min-width:26px}
+  .house summary .ht{flex:1}
+  .house summary .hs{color:var(--gold);font-size:.8rem;white-space:nowrap}
+  .house[open] summary{border-bottom:1px dashed var(--line);background:rgba(255,255,255,.02)}
+  .house .hbody{padding:12px 14px;font-size:.88rem}
+  .house .hbody p{margin-bottom:8px}
+  .house .kid{color:var(--star)}
+  .house .trad-says{color:var(--dim)}
+  .house .active-ch{display:inline-block;background:rgba(227,184,74,.15);color:var(--gold);font-family:'Courier New',monospace;font-size:.68rem;letter-spacing:.1em;padding:2px 8px;border-radius:3px;margin-left:6px}
+  .house .reality{border-top:1px dotted var(--line);padding-top:8px;font-size:.8rem;color:var(--sky);font-style:italic}
+  #results{display:none}
+  .footer-note{text-align:center;color:var(--dim);font-size:.76rem;font-style:italic;margin-top:26px;padding:0 18px}
+  @media(max-width:480px){ .tl-row .yrs{min-width:96px;font-size:.68rem} }
+</style>
+</head>
+<body>
+<header>
+  <h1>Four <b>Mirrors</b></h1>
+  <p>What the traditions say, computed honestly — with what they cannot say, stated plainly.</p>
+  <span class="phase">v1.0 · Production · Jyotish + Numerology + Western + Faal</span>
+</header>
+
+<main>
+  <!-- INPUT -->
+  <div class="card">
+    <h2>Birth details</h2>
+    <p class="hint">Everything is computed on your device. Nothing is sent anywhere or stored.</p>
+    <label for="in-name">Full name (for numerology)</label>
+    <input type="text" id="in-name" placeholder="e.g., Full name as commonly used">
+    <div class="row">
+      <div>
+        <label for="in-date">Date of birth</label>
+        <input type="date" id="in-date">
+      </div>
+      <div>
+        <label for="in-time">Time of birth <span style="text-transform:none">(24h)</span></label>
+        <input type="time" id="in-time" value="12:00">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="in-city">Birth place — type to search (170+ cities, all states &amp; UTs)</label>
+        <input type="text" id="in-city" list="india-cities" placeholder="Start typing: Bijapur, Nanded, Guwahati…" oninput="cityPick()">
+        <datalist id="india-cities"></datalist>
+      </div>
+    </div>
+    <div class="row">
+      <div><label for="in-lat">Latitude (° north)</label><input type="number" id="in-lat" step="0.01" placeholder="16.83"></div>
+      <div><label for="in-lon">Longitude (° east)</label><input type="number" id="in-lon" step="0.01" placeholder="75.71"></div>
+      <div><label for="in-tz">Time zone (hrs from UTC)</label><input type="number" id="in-tz" step="0.25" value="5.5"></div>
+    </div>
+    <label style="display:flex;gap:10px;align-items:flex-start;margin-top:16px;text-transform:none;font-family:Georgia,serif;font-size:.9rem;color:var(--star);cursor:pointer">
+      <input type="checkbox" id="self-check" style="width:auto;margin-top:4px">
+      <span>This is <b>my own</b> birth detail. I am reading about <b>myself</b>. (यह मेरी अपनी जन्म-तिथि है — मैं अपने बारे में पढ़ रहा/रही हूँ।)</span>
+    </label>
+    <button class="btn" onclick="run()">Read the mirrors</button>
+    <p class="accuracy">Accuracy note, stated openly: this engine computes real planetary positions to roughly ±1°. That is enough for signs, nakshatras and dasha periods in nearly all cases — but a birth minutes from a sign boundary could flip. Professional ephemeris software is more precise. Most apps will not tell you this; this one does.</p>
+  </div>
+
+  <div id="results">
+    <!-- JYOTISH -->
+    <div class="card">
+      <h2><span class="trad">Mirror 1 · Jyotish (Vedic tradition)</span>Birth chart essentials</h2>
+      <div class="glossary">
+        <b>Rashi</b> = the zodiac sign a planet sits in (sidereal — measured against the actual stars).
+        <b>Lagna</b> = the sign rising on the eastern horizon at birth; tradition treats it as the "self".
+        <b>Nakshatra</b> = one of 27 lunar mansions; the Moon's nakshatra drives the dasha clock.
+      </div>
+      <div id="jy-core"></div>
+      <table id="jy-planets"></table>
+      <h2 style="margin-top:18px"><span class="trad">Jyotish · navamsa (D9) — नवांश</span>The inside-strength chart, explained simply</h2>
+      <div class="glossary">Imagine each sign as a room, and now cut every room into <b>9 small slices</b> of 3°20&prime; each. The slice a planet stands in makes a second, finer chart — the <b>navamsa</b>. Kids' version: the main chart (D1) is how strong a player <i>looks</i>; the navamsa (D9) is how strong they play <i>in the finals</i>. Tradition uses it mostly for marriage and a planet's true inner strength. A planet in the <b>same sign in both charts</b> (called <i>vargottama</i>) is read as especially steady.</div>
+      <table id="jy-navamsa"></table>
+      <h2 style="margin-top:18px"><span class="trad">Jyotish · timing</span>Vimshottari dasha — the tradition's life chapters</h2>
+      <div class="glossary"><b>Mahadasha</b> = a major planetary period (chapters of life, 6–20 years each). <b>Antardasha</b> = the sub-chapter inside it. The full cycle is 120 years, started by the Moon's position at birth.</div>
+      <div id="jy-dasha"></div>
+      <h2 style="margin-top:22px"><span class="trad">Jyotish · the 12 life areas (bhavas)</span>Life, money, relations &amp; more — explained simply</h2>
+      <div class="glossary"><b>Bhava (house)</b> = tradition divides life into 12 areas, like 12 rooms of a house. Each room gets a sign, a caretaker planet (its "lord"), and sometimes planets living inside it. Below, every room is explained in plain words.</div>
+      <div id="jy-houses"></div>
+      <h2 style="margin-top:22px"><span class="trad">Jyotish · intimacy &amp; married life</span>What tradition reads about the private side</h2>
+      <div class="glossary"><b>Note:</b> this section uses adult wording, kept respectful. Tradition reads intimacy mainly through <b>Venus</b> (affection &amp; pleasure), <b>Mars</b> (desire &amp; energy), and the <b>7th, 8th and 12th rooms</b>.</div>
+      <div id="jy-intimacy"></div>
+      <h2 style="margin-top:22px"><span class="trad">Jyotish · character &amp; values (dharma)</span>What tradition associates — and what it refuses to judge</h2>
+      <div id="jy-dharma"></div>
+      <h2 style="margin-top:22px"><span class="trad">Jyotish · spiritual life</span>The inner journey — what tradition reads, with respect</h2>
+      <div class="glossary">Tradition reads the spiritual side through <b>Ketu</b> (the moksha planet — letting go), <b>Jupiter</b> (the guru — wisdom &amp; guidance), the <b>5th room</b> (merit carried in), the <b>9th room</b> (dharma) and the <b>12th room</b> (liberation &amp; retreat).</div>
+      <div id="jy-spirit"></div>
+      <div class="contradiction" style="border-color:var(--gold)">
+        <span class="lbl" style="color:var(--gold)">A line this tool will not cross</span>
+        This tool will never declare any person "ethical" or "unethical", honest or dishonest, from a chart. No birth detail can measure character — only repeated actions can. A verdict like that, printed by software, would be used against real people: friends, partners, employees, in-laws. If you want to judge someone's honesty, watch what they do over twelve months. That reading is free and it is accurate.
+      </div>
+      <div class="honesty">
+        <div class="hh">Honesty panel</div>
+        <div class="hb">
+          <p><span class="lbl says">What tradition says —</span> the readings above are the standard Jyotish interpretations, computed by the book.</p>
+          <p><span class="lbl cant">What it cannot tell you —</span> whether any of it will happen. Controlled tests have never shown birth charts predict life outcomes better than chance. Two traditions even disagree on where the planets "are" (see the contradiction box below).</p>
+          <p><span class="lbl real">What actually decides these things —</span> health follows habits and doctors; careers follow skills and markets; legal matters follow evidence and lawyers; relationships follow behavior. Use the chart for reflection, never in place of those.</p>
+        </div>
+      </div>
+      <h2 style="margin-top:22px"><span class="trad">Jyotish · work</span>Job or business — tradition's leaning</h2>
+      <div class="glossary"><b>The classic question.</b> Tradition reads it from the 10th room (career), its caretaker, and the strength of Mercury (trade), Saturn (service) and Mars (independent drive). It gives a <i>leaning</i>, never a command.</div>
+      <div id="jy-work"></div>
+    </div>
+
+    <!-- MARRIAGE MATCHING -->
+    <div class="card">
+      <h2><span class="trad">Jyotish · marriage matching (Guna Milan)</span>Two charts, 36 points, explained for anyone</h2>
+      <div class="glossary"><b>Guna Milan</b> = tradition's 8-part compatibility test (Ashtakoota), scored out of 36, based mainly on both Moons. <b>Consent line:</b> run this only when both people know and agree — a match report made about someone behind their back is surveillance, not tradition.</div>
+      <p class="hint">Person A is the chart computed above. Enter Person B below, then match.</p>
+      <div class="row">
+        <div><label for="b-name">Person B — name (optional)</label><input type="text" id="b-name"></div>
+        <div><label for="b-date">Date of birth</label><input type="date" id="b-date"></div>
+        <div><label for="b-time">Time (24h)</label><input type="time" id="b-time" value="12:00"></div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="b-city">Birth place — type to search</label>
+          <input type="text" id="b-city" list="india-cities" placeholder="Any Indian city or town" oninput="cityPickB()">
+        </div>
+        <div><label for="b-lat">Latitude</label><input type="number" id="b-lat" step="0.01"></div>
+        <div><label for="b-lon">Longitude</label><input type="number" id="b-lon" step="0.01"></div>
+        <div><label for="b-tz">Time zone</label><input type="number" id="b-tz" step="0.25" value="5.5"></div>
+      </div>
+      <label style="display:flex;gap:10px;align-items:flex-start;margin-top:16px;text-transform:none;font-family:Georgia,serif;font-size:.9rem;color:var(--star);cursor:pointer">
+        <input type="checkbox" id="consent-check" style="width:auto;margin-top:4px">
+        <span>Person B <b>knows and agrees</b> that this match is being run. (दूसरे व्यक्ति को पता है और उसकी सहमति है।)</span>
+      </label>
+      <button class="btn" onclick="runMatch()">Match the two charts</button>
+      <div id="match-out"></div>
+      <p class="accuracy">Simplifications, disclosed: the Yoni, Vashya and Gana tables vary slightly between classical sources; this tool uses common versions and scores unknown middle cases as neutral rather than guessing. A traditional astrologer may differ by 1–3 points. Varna and some tables are gendered in the classics; here they are read as Person A / Person B.</p>
+    </div>
+
+    <!-- WESTERN -->
+    <div class="card">
+      <h2><span class="trad">Mirror 3 · Western astrology (tropical)</span>Sun, Moon &amp; Rising — the other way of reading the same sky</h2>
+      <div class="glossary"><b>Why the signs differ from Jyotish:</b> Western astrology measures from the seasons (tropical); Jyotish measures from the stars (sidereal). The two rulers are ~24° apart today — so the <i>same planet at the same moment</i> often lands in different signs. Both cannot be describing the same truth; watch the comparison table below.</div>
+      <div id="we-out"></div>
+      <div class="honesty">
+        <div class="hh">Honesty panel</div>
+        <div class="hb">
+          <p><span class="lbl says">What tradition says —</span> the Sun-sign, Moon-sign and Rising readings above are the standard Western interpretations.</p>
+          <p><span class="lbl cant">What it cannot tell you —</span> the largest controlled studies ever run found astrologers could not match charts to real people better than coin-flipping. And one twelfth of humanity shares each sign.</p>
+          <p><span class="lbl real">What actually describes you —</span> ask three people who know you well for three words each. That reading is specific to you; no sign is.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAAL -->
+    <div class="card">
+      <h2><span class="trad">Mirror 4 · Faal (the reflective draw)</span>A verse to sit with — in the spirit of the tradition</h2>
+      <div class="glossary"><b>Faal</b> is the Persian practice of opening a book of poetry with a question in your heart and reading the verse you land on — not as a fortune, but as a mirror for your own thinking. <b>Honesty note:</b> the verses below are original reflections written in that spirit; they are not the words of Hafez or any classical poet, and this tool will not fake an attribution.</div>
+      <p class="hint">Hold your question in mind. Then draw.</p>
+      <button class="btn" onclick="drawFaal()">Draw a verse</button>
+      <div id="faal-out"></div>
+    </div>
+
+    <!-- COMPARISON -->
+    <div class="card">
+      <h2><span class="trad">The comparison view</span>All mirrors, side by side — where they agree, and where they cannot all be right</h2>
+      <div id="cmp-out"></div>
+      <div class="honesty">
+        <div class="hh">What this table is really for</div>
+        <div class="hb">
+          <p>Every app on the store shows you one system and lets you assume it is the truth. This table shows you the systems <i>together</i> — and lets you see with your own eyes that they disagree about the same sky, the same name, the same person. Whatever you decide to believe after seeing that, you will believe it with open eyes. That is the whole point of Four Mirrors.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- REAL QUESTIONS -->
+    <div class="card">
+      <h2><span class="trad">The questions people really ask</span>What no chart can answer — and what will</h2>
+      <div class="glossary">These are the real questions people bring to astrologers, asked sideways because there is nowhere to ask them directly. The instinct behind each is right. The chart is the wrong tool. Here is the right one.</div>
+      <div id="rq-out"></div>
+    </div>
+
+    <!-- PEOPLE & PROGRESS -->
+    <div class="card">
+      <h2><span class="trad">Jyotish · the people in your life &amp; your progress</span>Spouse, children, parents, in-laws, friends, colleagues, manager — and rise &amp; fall</h2>
+      <div class="glossary">Tradition assigns each relationship a room: <b>7th</b> spouse, <b>5th</b> children, <b>4th</b> mother, <b>9th</b> father, <b>2nd</b> extended family, <b>11th</b> friends &amp; gains, <b>6th</b> colleagues &amp; rivals, <b>10th</b> manager &amp; authority. Below, each is read from your chart — about <b>your side</b> of each bond, never as a verdict on the other person.</div>
+      <div id="jy-people"></div>
+      <h2 style="margin-top:22px"><span class="trad">Fidelity &amp; trust</span>The section every app dodges — handled straight</h2>
+      <div class="contradiction" style="border-color:var(--gold)">
+        <span class="lbl" style="color:var(--gold)">What this app will not compute</span>
+        No chart detects or predicts an affair — yours or anyone's. Classical texts do speculate from an "afflicted 7th house," and real marriages have been wrecked by accusations built on exactly that speculation, sometimes by one astrologer's sentence. This tool will not generate that sentence in either direction: not "your spouse will stray" (a character verdict on a real person from fabricated evidence) and not "you are destined to stray" (a permission slip pretending to be fate — nothing is written; choices are choices).
+      </div>
+      <div class="hbody" style="padding:12px 0 0">
+        <p class="reality" style="border-top:none">What actually protects a marriage: affection expressed in ordinary weeks, conflicts repaired rather than buried, and needs spoken before they go looking for other doors. What to do with real suspicion: one direct, private, kind conversation — and if trust is genuinely broken, a counsellor, not a chart. What to do with an astrologer's warning about your spouse: nothing. A stranger's speculation is not evidence about the person who shares your home.</p>
+      </div>
+    </div>
+
+    <!-- SYNTHESIS -->
+    <div class="card">
+      <h2><span class="trad">The four mirrors speak together</span>One combined reading — agreements, contradictions, and the honest whole</h2>
+      <div class="glossary">Below, Jyotish, Western astrology and both numerologies are compared <b>theme by theme</b>. Where two or more mirrors independently point at the same trait, it is listed as a convergence. Where they clash, the clash is shown. Faal joins at the end as reflection, not as a vote. This is what four systems honestly combined actually looks like.</div>
+      <div id="syn-out"></div>
+    </div>
+
+    <!-- EDUCATIONAL MODULE -->
+    <div class="card">
+      <h2><span class="trad">Educational module</span>How "guaranteed hits" work — learn to spot them in one sitting</h2>
+      <div class="glossary">Some predictions feel stunningly accurate. This module shows the five machines behind that feeling, so you can enjoy any reading with open eyes — and protect yourself and your family from the expensive kind.</div>
+      <div id="edu-static"></div>
+    </div>
+
+    <!-- NUMEROLOGY -->
+    <div class="card">
+      <h2><span class="trad">Mirror 2 · Numerology (two systems)</span>Name &amp; birth numbers</h2>
+      <div class="glossary"><b>Chaldean</b> assigns numbers by a letter's ancient sound value (1–8). <b>Pythagorean</b> assigns them by alphabet order (1–9). Same name, different math — watch what happens.</div>
+      <div id="num-out"></div>
+      <div class="contradiction" id="num-contra"></div>
+      <div class="honesty">
+        <div class="hh">Honesty panel</div>
+        <div class="hb">
+          <p><span class="lbl says">What tradition says —</span> the trait readings shown for each number are the standard ones from each school.</p>
+          <p><span class="lbl cant">What it cannot tell you —</span> anything specific to the person. Every human sharing this spelling gets an identical reading. And when two schools of the same art give different numbers, at most one can be right — and possibly neither.</p>
+          <p><span class="lbl real">What actually describes a person —</span> what they repeatedly do. Twelve months of actions beats any number derived from spelling.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- end mirrors -->
+  </div>
+
+<!-- NUMBER COMPANIONS -->
+    <div class="card">
+      <h2><span class="trad">Numerology · number companions</span>Mobile number &amp; vehicle number — the tradition, honestly</h2>
+      <div class="glossary">Tradition sums every digit of a number you live with, reduces it to 1–9, and reads the planet behind it. Kids' version: your phone and your vehicle get a "team jersey number," and tradition asks whether that jersey matches yours.</div>
+      <div class="row">
+        <div><label for="n-mobile">Mobile number</label><input type="text" id="n-mobile" inputmode="numeric" placeholder="e.g. 98XXXXXXXX"></div>
+        <div><label for="n-vehicle">Vehicle number (digits part)</label><input type="text" id="n-vehicle" placeholder="e.g. MH12 AB 3456 — digits are used"></div>
+      </div>
+      <button class="btn" onclick="readNumbers()">Read my numbers</button>
+      <div id="numco-out"></div>
+    </div>
+
+    <!-- RECORDS VAULT -->
+    <div class="card">
+      <h2><span class="trad">Your record book</span>Save readings, search them, export them — all on this device</h2>
+      <div class="glossary">
+        <b>Where this lives:</b> on this device only. Nothing is uploaded, no server exists, nothing costs money. Records survive closing the browser. To move them to another phone or back them up, use <b>Export</b> — you get one file that is yours to keep, and <b>Import</b> brings it back.
+        <br><br><b>The consent rule, built in:</b> a record can only be saved after the person it belongs to has been told. That is what makes this a practitioner's record book and not a file kept on someone behind their back. Every entry stores who consented and when.
+      </div>
+      <div id="rec-consent" class="contradiction" style="border-color:var(--gold)">
+        <span class="lbl" style="color:var(--gold)">Before saving</span>
+        Confirm the person whose chart is on screen knows their birth details and reading are being stored in your record book, and can ask you to delete it at any time.
+        <label style="display:flex;gap:10px;align-items:flex-start;margin-top:10px;text-transform:none;font-family:Georgia,serif;font-size:.9rem;color:var(--star);cursor:pointer">
+          <input type="checkbox" id="rec-ok" style="width:auto;margin-top:4px">
+          <span>They know, and they agreed. (उन्हें पता है और उनकी सहमति है।)</span>
+        </label>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <div><label for="rec-note">Note for this record (optional)</label><input type="text" id="rec-note" placeholder="e.g. read on 13 July, asked about career"></div>
+      </div>
+      <button class="btn" onclick="saveRecord()">Save this reading to my record book</button>
+      <button class="btn ghost" onclick="exportRecords()" style="background:none;border:1px solid var(--line);color:var(--dim)">Export all (backup file)</button>
+      <label for="rec-import" class="btn" style="display:inline-block;background:none;border:1px solid var(--line);color:var(--dim);cursor:pointer">Import backup
+        <input type="file" id="rec-import" accept=".json" style="display:none" onchange="importRecords(event)">
+      </label>
+      <div id="rec-list" style="margin-top:16px"></div>
+    </div>
+
+    <!-- DOWNLOAD -->
+    <div class="card" style="text-align:center">
+      <h2><span class="trad">Your full report</span>Everything above, in one file you keep</h2>
+      <p class="hint">Downloads every computed section — chart, life areas, quadrants, matching if run, synthesis, and every honesty panel. The honesty panels are part of the report on purpose: a reading without its limits is advertising.</p>
+      <button class="btn" onclick="downloadReport()">Download full report</button>
+    </div>
+
+    
+
+
+  <p class="footer-note">Four Mirrors shows you the traditions faithfully and tells you their limits truthfully. A mirror reflects; it does not foretell.<br><br>
+  <b>Production notice:</b> this app computes on your device and stores nothing. It offers cultural and educational content, not advice — decisions about health belong with doctors, money with qualified planners, law with lawyers, marriage with the two people in it. It reads only your own chart by your own declaration, generates no verdicts on any person's character or fidelity, and answers no question about another person's body or choices. Engine accuracy ±1° (boundary cases flagged on-screen). Guna Milan uses the most common classical tables; where sources differ, the simplification is disclosed. If any reading here worries you, the honesty panel beside it is the antidote — read it twice.</p>
+</main>
+
+<script>
+/* ---------------- astronomy engine (Schlyter low-precision method, ~±1°) ---------------- */
+const D2R = Math.PI/180, R2D = 180/Math.PI;
+const norm = x => ((x % 360) + 360) % 360;
+
+function julianDay(y, mo, d, utHours){
+  if(mo <= 2){ y -= 1; mo += 12; }
+  const A = Math.floor(y/100), B = 2 - A + Math.floor(A/4);
+  return Math.floor(365.25*(y+4716)) + Math.floor(30.6001*(mo+1)) + d + B - 1524.5 + utHours/24;
+}
+function kepler(M, e){
+  let E = M + e*R2D*Math.sin(M*D2R)*(1 + e*Math.cos(M*D2R));
+  for(let i=0;i<8;i++){
+    E = E - (E - e*R2D*Math.sin(E*D2R) - M) / (1 - e*Math.cos(E*D2R));
+  }
+  return E;
+}
+function planetPos(el, d){
+  const N=norm(el.N0+el.Nc*d), i=el.i0+el.ic*d, w=norm(el.w0+el.wc*d);
+  const a=el.a0+el.ac*d, e=el.e0+el.ec*d, M=norm(el.M0+el.Mc*d);
+  const E=kepler(M,e);
+  const xv=a*(Math.cos(E*D2R)-e), yv=a*Math.sqrt(1-e*e)*Math.sin(E*D2R);
+  const v=norm(Math.atan2(yv,xv)*R2D), r=Math.sqrt(xv*xv+yv*yv);
+  const xh=r*(Math.cos(N*D2R)*Math.cos((v+w)*D2R)-Math.sin(N*D2R)*Math.sin((v+w)*D2R)*Math.cos(i*D2R));
+  const yh=r*(Math.sin(N*D2R)*Math.cos((v+w)*D2R)+Math.cos(N*D2R)*Math.sin((v+w)*D2R)*Math.cos(i*D2R));
+  const zh=r*Math.sin((v+w)*D2R)*Math.sin(i*D2R);
+  return {xh,yh,zh,r,v,N,w,M};
+}
+function computeAll(jd){
+  const d = jd - 2451543.5;
+  // Sun
+  const ws=norm(282.9404+4.70935e-5*d), es=0.016709-1.151e-9*d, Ms=norm(356.0470+0.9856002585*d);
+  const Es=kepler(Ms,es);
+  const xs=Math.cos(Es*D2R)-es, ys=Math.sqrt(1-es*es)*Math.sin(Es*D2R);
+  const vs=norm(Math.atan2(ys,xs)*R2D), rs=Math.sqrt(xs*xs+ys*ys);
+  const sunLon=norm(vs+ws);
+  const xsun=rs*Math.cos(sunLon*D2R), ysun=rs*Math.sin(sunLon*D2R);
+  // Moon (with main perturbations)
+  const mo={N0:125.1228,Nc:-0.0529538083,i0:5.1454,ic:0,w0:318.0634,wc:0.1643573223,a0:60.2666,ac:0,e0:0.054900,ec:0,M0:115.3654,Mc:13.0649929509};
+  const mp=planetPos(mo,d);
+  let moonLon=norm(Math.atan2(mp.yh,mp.xh)*R2D);
+  const Lm=norm(mo.N0+mo.Nc*d + mo.w0+mo.wc*d + mo.M0+mo.Mc*d);
+  const Dm=norm(Lm-sunLon), F=norm(Lm-(mo.N0+mo.Nc*d)), Mm=norm(mo.M0+mo.Mc*d);
+  moonLon += -1.274*Math.sin((Mm-2*Dm)*D2R)+0.658*Math.sin(2*Dm*D2R)-0.186*Math.sin(Ms*D2R)
+             -0.059*Math.sin((2*Mm-2*Dm)*D2R)-0.057*Math.sin((Mm-2*Dm+Ms)*D2R)
+             +0.053*Math.sin((Mm+2*Dm)*D2R)+0.046*Math.sin((2*Dm-Ms)*D2R)+0.041*Math.sin((Mm-Ms)*D2R)
+             -0.035*Math.sin(Dm*D2R)-0.031*Math.sin((Mm+Ms)*D2R);
+  moonLon=norm(moonLon);
+  // Planets
+  const EL={
+    Mercury:{N0:48.3313,Nc:3.24587e-5,i0:7.0047,ic:5e-8,w0:29.1241,wc:1.01444e-5,a0:0.387098,ac:0,e0:0.205635,ec:5.59e-10,M0:168.6562,Mc:4.0923344368},
+    Venus:{N0:76.6799,Nc:2.46590e-5,i0:3.3946,ic:2.75e-8,w0:54.8910,wc:1.38374e-5,a0:0.723330,ac:0,e0:0.006773,ec:-1.302e-9,M0:48.0052,Mc:1.6021302244},
+    Mars:{N0:49.5574,Nc:2.11081e-5,i0:1.8497,ic:-1.78e-8,w0:286.5016,wc:2.92961e-5,a0:1.523688,ac:0,e0:0.093405,ec:2.516e-9,M0:18.6021,Mc:0.5240207766},
+    Jupiter:{N0:100.4542,Nc:2.76854e-5,i0:1.3030,ic:-1.557e-7,w0:273.8777,wc:1.64505e-5,a0:5.20256,ac:0,e0:0.048498,ec:4.469e-9,M0:19.8950,Mc:0.0830853001},
+    Saturn:{N0:113.6634,Nc:2.38980e-5,i0:2.4886,ic:-1.081e-7,w0:339.3939,wc:2.97661e-5,a0:9.55475,ac:0,e0:0.055546,ec:-9.499e-9,M0:316.9670,Mc:0.0334442282},
+    Uranus:{N0:74.0005,Nc:1.3978e-5,i0:0.7733,ic:1.9e-8,w0:96.6612,wc:3.0565e-5,a0:19.18171,ac:-1.55e-8,e0:0.047318,ec:7.45e-9,M0:142.5905,Mc:0.011725806},
+    Neptune:{N0:131.7806,Nc:3.0173e-5,i0:1.7700,ic:-2.55e-7,w0:272.8461,wc:-6.027e-6,a0:30.05826,ac:3.313e-8,e0:0.008606,ec:2.15e-9,M0:260.2471,Mc:0.005995147}
+  };
+  const Mj=norm(EL.Jupiter.M0+EL.Jupiter.Mc*d), Msat=norm(EL.Saturn.M0+EL.Saturn.Mc*d);
+  const out={Sun:sunLon, Moon:moonLon};
+  for(const name in EL){
+    const p=planetPos(EL[name],d);
+    let lonh=norm(Math.atan2(p.yh,p.xh)*R2D);
+    if(name==='Jupiter'){
+      lonh += -0.332*Math.sin((2*Mj-5*Msat-67.6)*D2R)-0.056*Math.sin((2*Mj-2*Msat+21)*D2R)
+              +0.042*Math.sin((3*Mj-5*Msat+21)*D2R)-0.036*Math.sin((Mj-2*Msat)*D2R);
+    }
+    if(name==='Saturn'){
+      lonh += 0.812*Math.sin((2*Mj-5*Msat-67.6)*D2R)-0.229*Math.cos((2*Mj-4*Msat-2)*D2R)
+              +0.119*Math.sin((Mj-2*Msat-3)*D2R)+0.046*Math.sin((2*Mj-6*Msat-69)*D2R);
+    }
+    const rh=Math.sqrt(p.xh*p.xh+p.yh*p.yh+p.zh*p.zh);
+    const xg=rh*Math.cos(lonh*D2R)+xsun, yg=rh*Math.sin(lonh*D2R)+ysun;
+    out[name]=norm(Math.atan2(yg,xg)*R2D);
+  }
+  out.Rahu = norm(125.1228 - 0.0529538083*d);
+  out.Ketu = norm(out.Rahu+180);
+  // Pluto (Schlyter approximation, valid ~1900–2100)
+  {
+    const S=(50.03+0.033459652*d)*D2R, P=(238.95+0.003968789*d)*D2R;
+    const lonecl = 238.9508 + 0.00400703*d
+      - 19.799*Math.sin(P) + 19.848*Math.cos(P)
+      + 0.897*Math.sin(2*P) - 4.956*Math.cos(2*P)
+      + 0.610*Math.sin(3*P) + 1.211*Math.cos(3*P)
+      - 0.341*Math.sin(4*P) - 0.190*Math.cos(4*P)
+      + 0.128*Math.sin(5*P) - 0.034*Math.cos(5*P)
+      - 0.038*Math.sin(6*P) + 0.031*Math.cos(6*P)
+      + 0.020*Math.sin(S-P) - 0.010*Math.cos(S-P);
+    const r = 40.72 + 6.68*Math.sin(P) + 6.90*Math.cos(P)
+      - 1.18*Math.sin(2*P) - 0.03*Math.cos(2*P)
+      + 0.15*Math.sin(3*P) - 0.14*Math.cos(3*P);
+    const xg=r*Math.cos(lonecl*D2R)+xsun, yg=r*Math.sin(lonecl*D2R)+ysun;
+    out.Pluto=norm(Math.atan2(yg,xg)*R2D);
+  }
+  return out;
+}
+function ascendant(jd, latDeg, lonEastDeg){
+  const d = jd - 2451545.0;
+  const gmst = norm(280.46061837 + 360.98564736629*d);
+  const lst = norm(gmst + lonEastDeg);
+  const eps = 23.4393 - 3.563e-7*(jd-2451543.5);
+  const ramc = lst*D2R, e=eps*D2R, phi=latDeg*D2R;
+  let asc = Math.atan2(Math.cos(ramc), -(Math.sin(ramc)*Math.cos(e) + Math.tan(phi)*Math.sin(e)))*R2D;
+  return norm(asc);
+}
+const ayanamsa = jd => 23.85 + 0.0139722*((jd-2451545.0)/365.25); // Lahiri approx
+
+/* ---------------- jyotish data ---------------- */
+const RASHI=['Mesha (Aries)','Vrishabha (Taurus)','Mithuna (Gemini)','Karka (Cancer)','Simha (Leo)','Kanya (Virgo)','Tula (Libra)','Vrischika (Scorpio)','Dhanu (Sagittarius)','Makara (Capricorn)','Kumbha (Aquarius)','Meena (Pisces)'];
+const NAK=['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishta','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'];
+const DASHA_SEQ=[['Ketu',7],['Venus',20],['Sun',6],['Moon',10],['Mars',7],['Rahu',18],['Jupiter',16],['Saturn',19],['Mercury',17]];
+const DASHA_GIST={
+  Ketu:'tradition: detachment, endings that free, spiritual pull',
+  Venus:'tradition: comfort, relationships, arts, material ease',
+  Sun:'tradition: authority, visibility, father-figures, ego tests',
+  Moon:'tradition: emotions, home, public connection, changeability',
+  Mars:'tradition: drive, conflict, courage, property matters',
+  Rahu:'tradition: ambition, foreign things, sudden rises, illusions',
+  Jupiter:'tradition: growth, learning, children, fortune, teachers',
+  Saturn:'tradition: discipline, delay, hard lessons, lasting rewards',
+  Mercury:'tradition: intellect, trade, communication, adaptability'
+};
+const LAGNA_GIST=['energetic, direct, impatient','steady, comfort-loving, stubborn','curious, talkative, scattered','sensitive, protective, moody','proud, warm, attention-seeking','precise, helpful, critical','balanced, social, indecisive','intense, private, determined','optimistic, blunt, freedom-loving','disciplined, ambitious, reserved','independent, idealistic, detached','imaginative, gentle, escapist'];
+const SIGN_LORD=['Mars','Venus','Mercury','Moon','Sun','Mercury','Venus','Mars','Jupiter','Saturn','Saturn','Jupiter'];
+const HOUSES=[
+ {t:'You — body, nature & how you face life', kid:'This room is about YOU: your body, your energy, and the style you use to meet the world.', real:'What actually shapes it: sleep, food, exercise, and habits — the boring things that work.'},
+ {t:'Money you keep, family & speech', kid:'This room is about the money you save, the family you grew up with, and how you speak.', real:'What actually builds savings: earning more than you spend, an emergency fund, and patience.'},
+ {t:'Courage, siblings, skills & effort', kid:'This room is about bravery, brothers and sisters, and skills you build with your own hands.', real:'What actually builds skill: practice, repeated a little every day.'},
+ {t:'Home, mother, peace of mind & property', kid:'This room is about your home, your mother, feeling settled, and things like land or vehicles.', real:'What actually makes a home peaceful: how the people in it treat each other.'},
+ {t:'Studies, children, creativity & romance', kid:'This room is about learning, kids, fun ideas, and the flutter of first love.', real:'What actually decides studies: showing up, asking questions, and honest revision.'},
+ {t:'Health troubles, daily work, debts & rivals', kid:'This room is about sickness, loans, competitors, and the daily grind of work.', real:'What actually settles debts and disputes: budgets, doctors, and good lawyers — not remedies.'},
+ {t:'Marriage, partnerships & the "other person"', kid:'This room is about marriage, business partners, and anyone who sits across the table from you.', real:'What actually makes partnerships work: honesty, respect, and how fights get repaired.'},
+ {t:'Big changes, secrets, inheritance & long life', kid:'This room is about sudden changes, hidden things, money that comes from others, and deep transformation.', real:'What actually protects you in sudden change: savings, insurance, and people who show up.'},
+ {t:'Luck, father, beliefs & long journeys', kid:'This room is about good fortune, your father, your beliefs, and travel to far places.', real:'What actually looks like luck from outside: preparation meeting opportunity.'},
+ {t:'Career, reputation & your name in the world', kid:'This room is about your job, your bosses, and what people say about your work.', real:'What actually builds a career: skills the market wants, delivered reliably, year after year.'},
+ {t:'Gains, income, friends & big wishes', kid:'This room is about profits, salaries, friend circles, and dreams coming true.', real:'What actually grows income: value you create for others. Friends: measured by who shows up, not charts.'},
+ {t:'Expenses, losses, sleep, foreign lands & letting go', kid:'This room is about money going out, faraway places, deep sleep, and learning to let go.', real:'What actually controls expenses: a written budget looked at monthly.'}
+];
+const PLANET_IN_HOUSE={
+ Sun:'the Sun sits here — tradition says this area gets spotlight, pride and strong will, but also ego battles',
+ Moon:'the Moon sits here — tradition says feelings run deep in this area; it changes like tides',
+ Mercury:'Mercury sits here — tradition says thinking, talking and clever moves color this area',
+ Venus:'Venus sits here — tradition says charm, comfort and affection flow into this area',
+ Mars:'Mars sits here — tradition says energy, hurry and occasional fights heat this area up',
+ Jupiter:'Jupiter sits here — tradition calls this a blessing: growth, wisdom and protection in this area',
+ Saturn:'Saturn sits here — tradition says this area moves slowly, tests patience, but rewards steady work',
+ Rahu:'Rahu sits here — tradition says a big hunger and unusual, foreign or unconventional paths in this area',
+ Ketu:'Ketu sits here — tradition says detachment: this area matters less to the heart, or gets released over time'
+};
+
+/* ---------------- numerology ---------------- */
+const CH={a:1,b:2,c:3,d:4,e:5,f:8,g:3,h:5,i:1,j:1,k:2,l:3,m:4,n:5,o:7,p:8,q:1,r:2,s:3,t:4,u:6,v:6,w:6,x:5,y:1,z:7};
+const PY={}; 'abcdefghijklmnopqrstuvwxyz'.split('').forEach((c,i)=>PY[c]=(i%9)+1);
+const NUMGIST={1:'leader, initiator (Sun)',2:'cooperative, sensitive (Moon)',3:'expressive, optimistic (Jupiter)',4:'practical, stubborn (Rahu/Uranus)',5:'communicator, adaptable (Mercury)',6:'caring, harmonious (Venus)',7:'thinker, private (Ketu/Neptune)',8:'ambitious, disciplined (Saturn)',9:'driven, humanitarian (Mars)'};
+function reduce(n){ while(n>9){ n=String(n).split('').reduce((a,c)=>a+ +c,0);} return n; }
+function nameNum(name,map){
+  let s=0; for(const ch of name.toLowerCase()) if(map[ch]) s+=map[ch];
+  return {raw:s, red:reduce(s)};
+}
+
+/* ---------------- matching & work tables ---------------- */
+const NAK_GANA=['D','M','R','M','D','M','D','D','R','R','M','M','D','R','D','R','D','R','R','M','M','D','R','R','M','M','D']; // Deva/Manushya/Rakshasa
+const NAK_NADI=['A','M','N','N','M','A','A','M','N','N','M','A','A','M','N','N','M','A','A','M','N','N','M','A','A','M','N']; // Adi/Madhya/Antya
+const NAK_YONI=['Horse','Elephant','Sheep','Snake','Snake','Dog','Cat','Sheep','Cat','Rat','Rat','Cow','Buffalo','Tiger','Buffalo','Tiger','Deer','Deer','Dog','Monkey','Mongoose','Monkey','Lion','Horse','Lion','Cow','Elephant'];
+const YONI_ENEMY=[['Cat','Rat'],['Cow','Tiger'],['Horse','Buffalo'],['Elephant','Lion'],['Dog','Deer'],['Monkey','Sheep'],['Snake','Mongoose']];
+const VARNA_RANK={3:4,7:4,11:4, 0:3,4:3,8:3, 1:2,5:2,9:2, 2:1,6:1,10:1}; // signIdx -> Brahmin4/Kshatriya3/Vaishya2/Shudra1
+const VASHYA_GROUP={0:'Q',1:'Q',8:'Q',9:'Q', 2:'H',5:'H',6:'H',10:'H', 3:'W',11:'W', 4:'L', 7:'K'}; // Quadruped/Human/Water/Leo/Keeta
+const FRIEND={
+ Sun:{f:['Moon','Mars','Jupiter'],e:['Venus','Saturn']},
+ Moon:{f:['Sun','Mercury'],e:[]},
+ Mars:{f:['Sun','Moon','Jupiter'],e:['Mercury']},
+ Mercury:{f:['Sun','Venus'],e:['Moon']},
+ Jupiter:{f:['Sun','Moon','Mars'],e:['Mercury','Venus']},
+ Venus:{f:['Mercury','Saturn'],e:['Sun','Moon']},
+ Saturn:{f:['Mercury','Venus'],e:['Sun','Moon','Mars']}
+};
+const rel=(a,b)=> a===b?'f' : FRIEND[a].f.includes(b)?'f' : FRIEND[a].e.includes(b)?'e' : 'n';
+const KOOTA_MEANING={
+ Varna:'Attitude & ego balance — tradition asks who naturally gives way in daily life.',
+ Vashya:'Mutual pull — how easily the two of you influence each other.',
+ Tara:'Shared wellbeing — tradition asks whether your stars “support” each other.',
+ Yoni:'Physical & instinctive harmony — comfort at the animal level of living together.',
+ 'Graha Maitri':'Friendship of minds — do your ways of thinking enjoy each other.',
+ Gana:'Temperament — calm, worldly, or fiery basic natures.',
+ Bhakoot:'Money, family growth & emotional distance between you.',
+ Nadi:'Health & children — the mismatch tradition fears most.'
+};
+function ashtakoota(A,B){ // A,B: {moonSign, nakIdx}
+  const rows=[];
+  // Varna (1)
+  const varna = VARNA_RANK[A.moonSign]>=VARNA_RANK[B.moonSign]?1:0;
+  rows.push(['Varna',varna,1]);
+  // Vashya (2)
+  const gA=VASHYA_GROUP[A.moonSign], gB=VASHYA_GROUP[B.moonSign];
+  const vashya = gA===gB?2 : (['Q','H','W'].includes(gA)&&['Q','H','W'].includes(gB))?1 : 0.5;
+  rows.push(['Vashya',vashya,2]);
+  // Tara (3)
+  const taraDir=(x,y)=>{ const c=((y-x+27)%27)+1; const r=c%9; return [3,5,7,0].includes(r===0?0:r)&&[3,5,7].includes(r)?0:1.5; };
+  const tara = taraDir(A.nakIdx,B.nakIdx)+taraDir(B.nakIdx,A.nakIdx);
+  rows.push(['Tara',tara,3]);
+  // Yoni (4)
+  const yA=NAK_YONI[A.nakIdx], yB=NAK_YONI[B.nakIdx];
+  const enemy=YONI_ENEMY.some(p=>(p[0]===yA&&p[1]===yB)||(p[0]===yB&&p[1]===yA));
+  const yoni = yA===yB?4 : enemy?0 : 2;
+  rows.push(['Yoni',yoni,4,`${yA} & ${yB}`]);
+  // Graha Maitri (5)
+  const lA=SIGN_LORD[A.moonSign], lB=SIGN_LORD[B.moonSign];
+  const rAB=rel(lA,lB), rBA=rel(lB,lA);
+  let gm=3;
+  if(lA===lB||(rAB==='f'&&rBA==='f')) gm=5;
+  else if((rAB==='f'&&rBA==='n')||(rBA==='f'&&rAB==='n')) gm=4;
+  else if(rAB==='n'&&rBA==='n') gm=3;
+  else if((rAB==='f'&&rBA==='e')||(rBA==='f'&&rAB==='e')) gm=1;
+  else if((rAB==='n'&&rBA==='e')||(rBA==='n'&&rAB==='e')) gm=0.5;
+  else gm=0;
+  rows.push(['Graha Maitri',gm,5,`${lA} & ${lB}`]);
+  // Gana (6)
+  const gaA=NAK_GANA[A.nakIdx], gaB=NAK_GANA[B.nakIdx];
+  let gana;
+  if(gaA===gaB) gana=6;
+  else if((gaA==='D'&&gaB==='M')) gana=6;
+  else if((gaA==='M'&&gaB==='D')) gana=5;
+  else if((gaA==='D'&&gaB==='R')||(gaA==='R'&&gaB==='D')) gana=1;
+  else gana=0; // M-R either way
+  rows.push(['Gana',gana,6]);
+  // Bhakoot (7)
+  const diff=((B.moonSign-A.moonSign)+12)%12;
+  const bhakoot=[1,11,4,8,5,7].includes(diff)?0:7;
+  rows.push(['Bhakoot',bhakoot,7]);
+  // Nadi (8)
+  const nadi = NAK_NADI[A.nakIdx]===NAK_NADI[B.nakIdx]?0:8;
+  rows.push(['Nadi',nadi,8]);
+  return rows;
+}
+function mangal(sidP, lagnaSign){
+  const h=((Math.floor(sidP.Mars/30)-lagnaSign)+12)%12;
+  return [0,1,3,6,7,11].includes(h);
+}
+const rel2=null;
+function computeChart(dateV,timeV,lat,lon,tz){
+  const [Y,Mo,Dd]=dateV.split('-').map(Number);
+  const [hh,mm]=timeV.split(':').map(Number);
+  const jd=julianDay(Y,Mo,Dd,hh+mm/60-tz);
+  const ay=ayanamsa(jd);
+  const trop=computeAll(jd);
+  const sid={}; for(const k in trop) sid[k]=norm(trop[k]-ay);
+  const lagnaSign=Math.floor(norm(ascendant(jd,lat,lon)-ay)/30);
+  return {sid, lagnaSign, moonSign:Math.floor(sid.Moon/30), nakIdx:Math.floor(sid.Moon/(360/27))};
+}
+let chartA=null;
+function runMatch(){
+  if(!chartA){ alert('Compute your own chart first (the main form above).'); return; }
+  if(!document.getElementById('consent-check').checked){
+    alert('Matching needs both people. Please tick the box confirming Person B knows and agrees.\n\nA match run in secret is not tradition — it is surveillance.');
+    return;
+  }
+  const dateV=document.getElementById('b-date').value, timeV=document.getElementById('b-time').value||'12:00';
+  const lat=parseFloat(document.getElementById('b-lat').value), lon=parseFloat(document.getElementById('b-lon').value), tz=parseFloat(document.getElementById('b-tz').value);
+  if(!dateV||isNaN(lat)||isNaN(lon)||isNaN(tz)){ alert('Person B needs date, latitude, longitude and time zone.'); return; }
+  const chartB=computeChart(dateV,timeV,lat,lon,tz);
+  const rows=ashtakoota(chartA,chartB);
+  const total=rows.reduce((a,r)=>a+r[1],0);
+  const band = total>=28?['Tradition calls this an excellent match.','var(--leaf)']
+    : total>=24?['Tradition calls this a very good match.','var(--leaf)']
+    : total>=18?['Tradition calls this acceptable — with areas to mind.','var(--gold)']
+    : ['Tradition would advise against this match. Read the honesty panel before you let that number decide anything.','var(--rose)'];
+  const strengths=rows.filter(r=>r[1]>=r[2]*0.75).map(r=>r[0]);
+  const watch=rows.filter(r=>r[1]<r[2]*0.4).map(r=>r[0]);
+  const mA=mangal(chartA.sid,chartA.lagnaSign), mB=mangal(chartB.sid,chartB.lagnaSign);
+  const mangalTxt = mA&&mB?'Both charts carry Mangal dosha — tradition says the two cancel each other.'
+    : mA?'Person A carries Mangal dosha (Mars in a sensitive room); Person B does not. Tradition flags this; many astrologers also list cancellations — a live astrologer should be asked before any decision hangs on it.'
+    : mB?'Person B carries Mangal dosha; Person A does not. Same note as above.'
+    : 'Neither chart carries Mangal dosha.';
+  document.getElementById('match-out').innerHTML=`
+    <p style="margin-top:16px"><span class="big">${total} / 36</span> &nbsp; <span style="color:${band[1]}">${band[0]}</span></p>
+    <table>
+      <tr><th>Koota</th><th>Points</th><th>What it means for the two of you (tradition)</th></tr>
+      ${rows.map(r=>`<tr><td>${r[0]}${r[3]?` <span class="hint">(${r[3]})</span>`:''}</td><td class="mono" style="color:${r[1]>=r[2]*0.75?'var(--leaf)':r[1]<r[2]*0.4?'var(--rose)':'var(--gold)'}">${r[1]} / ${r[2]}</td><td class="hint" style="margin:0">${KOOTA_MEANING[r[0]]}</td></tr>`).join('')}
+    </table>
+    <p class="hint" style="margin-top:10px"><b style="color:var(--leaf)">What tradition says you can build together:</b> ${strengths.length?strengths.map(s=>KOOTA_MEANING[s].split('—')[0].trim()).join('; ')+'.':'the chart shows no standout strengths — tradition would look deeper.'}<br>
+    <b style="color:var(--rose)">What tradition says to watch:</b> ${watch.length?watch.map(s=>KOOTA_MEANING[s].split('—')[0].trim()).join('; ')+'.':'no serious traditional warnings.'}<br>
+    <b style="color:var(--gold)">Mangal check:</b> ${mangalTxt}</p>
+    <div class="honesty">
+      <div class="hh">Honesty panel — read before deciding anything</div>
+      <div class="hb">
+        <p><span class="lbl says">What tradition says —</span> the score above is real Guna Milan, computed by the book from both Moons.</p>
+        <p><span class="lbl cant">What it cannot tell you —</span> whether this marriage will be happy. The score is identical for every couple born on these two dates, anywhere, whoever they are. It cannot see kindness, honesty, effort, or how the two of you repair a fight — and those are the things marriages are actually made of.</p>
+        <p><span class="lbl real">What actually predicts a good marriage —</span> how you two handle disagreement, whether you agree on money, children and living arrangements, how each treats the other's family, and whether respect survives bad days. Ten honest conversations beat 36 points. A low score should never end a good relationship, and a high score should never excuse a bad one.</p>
+      </div>
+    </div>`;
+}
+/* ---------------- all-India city database (lat, lon; IST = +5.5 for all) ---------------- */
+const CITIES=[["Agartala",23.83,91.28],["Agra",27.18,78.01],["Ahmedabad",23.02,72.57],["Ahmednagar",19.09,74.75],["Aizawl",23.73,92.72],["Ajmer",26.45,74.64],["Akola",20.71,77.00],["Alappuzha",9.50,76.34],["Aligarh",27.88,78.08],["Alwar",27.55,76.63],["Ambala",30.38,76.78],["Amravati",20.93,77.75],["Amritsar",31.63,74.87],["Anand",22.56,72.95],["Anantapur",14.68,77.60],["Asansol",23.68,86.98],["Aurangabad (Sambhajinagar)",19.88,75.34],["Ayodhya",26.80,82.20],["Ballari",15.14,76.92],["Bareilly",28.37,79.43],["Bathinda",30.21,74.95],["Belagavi (Belgaum)",15.85,74.50],["Bengaluru",12.97,77.59],["Berhampur",19.32,84.79],["Bhagalpur",25.24,86.97],["Bhavnagar",21.76,72.15],["Bhilai",21.19,81.35],["Bhopal",23.26,77.41],["Bhubaneswar",20.30,85.82],["Bijapur / Vijayapura",16.83,75.71],["Bikaner",28.02,73.31],["Bilaspur",22.08,82.15],["Bokaro",23.67,86.15],["Chandigarh",30.73,76.78],["Chandrapur",19.97,79.30],["Chennai",13.08,80.27],["Coimbatore",11.02,76.97],["Cuttack",20.46,85.88],["Daman",20.40,72.85],["Darbhanga",26.15,85.90],["Darjeeling",27.04,88.26],["Davangere",14.46,75.92],["Dehradun",30.32,78.03],["Delhi",28.61,77.21],["Dhanbad",23.80,86.43],["Dharamshala",32.22,76.32],["Dibrugarh",27.47,94.91],["Dimapur",25.90,93.73],["Durgapur",23.52,87.31],["Erode",11.34,77.72],["Faridabad",28.41,77.31],["Gandhinagar",23.22,72.65],["Gangtok",27.33,88.61],["Gaya",24.79,85.00],["Ghaziabad",28.67,77.42],["Goa - Margao",15.27,73.96],["Goa - Panaji",15.49,73.83],["Gorakhpur",26.76,83.37],["Guntur",16.31,80.44],["Gurugram",28.46,77.03],["Guwahati",26.14,91.74],["Gwalior",26.22,78.18],["Haldwani",29.22,79.51],["Haridwar",29.95,78.16],["Hisar",29.15,75.72],["Howrah",22.59,88.31],["Hubballi (Hubli)",15.36,75.12],["Hyderabad",17.38,78.49],["Imphal",24.82,93.94],["Indore",22.72,75.86],["Itanagar",27.08,93.61],["Jabalpur",23.18,79.99],["Jaipur",26.91,75.79],["Jalandhar",31.33,75.58],["Jalgaon",21.01,75.56],["Jammu",32.73,74.87],["Jamnagar",22.47,70.06],["Jamshedpur",22.80,86.20],["Jhansi",25.45,78.57],["Jodhpur",26.24,73.02],["Jorhat",26.75,94.22],["Junagadh",21.52,70.46],["Kadapa",14.47,78.82],["Kalaburagi (Gulbarga)",17.33,76.83],["Kannur",11.87,75.37],["Kanpur",26.45,80.33],["Karimnagar",18.44,79.13],["Karnal",29.69,76.99],["Kavaratti",10.57,72.64],["Khammam",17.25,80.15],["Kharagpur",22.35,87.32],["Kochi",9.93,76.27],["Kohima",25.67,94.10],["Kolhapur",16.70,74.24],["Kolkata",22.57,88.36],["Kollam",8.89,76.61],["Korba",22.35,82.68],["Kota",25.21,75.86],["Kozhikode",11.26,75.78],["Kurnool",15.83,78.04],["Latur",18.40,76.56],["Leh",34.15,77.58],["Lucknow",26.85,80.95],["Ludhiana",30.90,75.86],["Madurai",9.93,78.12],["Mandi",31.71,76.93],["Mangaluru",12.91,74.86],["Mathura",27.49,77.67],["Meerut",28.98,77.71],["Moradabad",28.84,78.78],["Mumbai",19.08,72.88],["Muzaffarpur",26.12,85.39],["Mysuru",12.30,76.64],["Nagpur",21.15,79.09],["Nanded",19.15,77.30],["Nashik",20.00,73.79],["Navi Mumbai",19.03,73.03],["Nellore",14.44,79.99],["Nizamabad",18.67,78.10],["Noida",28.54,77.39],["Palakkad",10.79,76.65],["Panipat",29.39,76.96],["Patiala",30.34,76.39],["Patna",25.59,85.14],["Pimpri-Chinchwad",18.62,73.80],["Port Blair",11.62,92.73],["Prayagraj",25.44,81.85],["Puducherry",11.94,79.83],["Pune",18.52,73.86],["Puri",19.81,85.83],["Purnia",25.78,87.47],["Raipur",21.25,81.63],["Rajahmundry",17.00,81.78],["Rajkot",22.30,70.80],["Ranchi",23.34,85.31],["Ratnagiri",16.99,73.31],["Rewa",24.53,81.30],["Rishikesh",30.09,78.27],["Rohtak",28.90,76.61],["Rourkela",22.26,84.85],["Sagar",23.84,78.74],["Saharanpur",29.97,77.55],["Salem",11.66,78.15],["Sambalpur",21.47,83.97],["Sangli",16.85,74.58],["Satara",17.68,74.02],["Satna",24.57,80.83],["Shillong",25.58,91.89],["Shimla",31.10,77.17],["Shivamogga",13.93,75.57],["Sikar",27.61,75.14],["Silchar",24.83,92.78],["Siliguri",26.73,88.40],["Silvassa",20.27,73.02],["Solapur",17.66,75.91],["Srinagar",34.08,74.80],["Surat",21.17,72.83],["Tezpur",26.63,92.80],["Thane",19.22,72.98],["Thanjavur",10.79,79.14],["Thiruvananthapuram",8.52,76.94],["Thoothukudi",8.76,78.13],["Thrissur",10.53,76.21],["Tirunelveli",8.71,77.76],["Tirupati",13.63,79.42],["Tiruchirappalli",10.79,78.70],["Tumakuru",13.34,77.10],["Udaipur",24.58,73.68],["Udupi",13.34,74.75],["Ujjain",23.18,75.78],["Varanasi",25.32,82.99],["Vadodara",22.31,73.18],["Vellore",12.92,79.13],["Vijayawada",16.51,80.65],["Visakhapatnam",17.69,83.22],["Warangal",17.98,79.59]];
+(function(){
+  const dl=document.getElementById('india-cities');
+  if(dl) dl.innerHTML=CITIES.map(c=>`<option value="${c[0]}">`).join('');
+})();
+function findCity(txt){
+  if(!txt) return null;
+  const t=txt.toLowerCase().trim();
+  return CITIES.find(c=>c[0].toLowerCase()===t) || CITIES.find(c=>c[0].toLowerCase().startsWith(t)) || null;
+}
+/* ---------------- synthesis themes & education ---------------- */
+const SIGN_THEMES=[['energy','directness','impatience'],['steadiness','comfort','stubbornness'],['communication','curiosity','restlessness'],['emotion','care','moodiness'],['leadership','warmth','pride'],['precision','service','criticism'],['balance','sociability','indecision'],['intensity','privacy','determination'],['freedom','honesty','optimism'],['discipline','ambition','reserve'],['independence','ideals','detachment'],['imagination','gentleness','escapism']];
+const NUM_THEMES={1:['leadership','energy'],2:['care','emotion'],3:['communication','optimism'],4:['discipline','stubbornness'],5:['communication','restlessness'],6:['care','balance'],7:['privacy','imagination'],8:['ambition','discipline'],9:['energy','ideals']};
+function renderSynthesis(lagnaSign, moonSign, trop, jd, lat, lon, name){
+  const mirrors={};
+  mirrors['Jyotish']=[...SIGN_THEMES[lagnaSign],...SIGN_THEMES[moonSign]];
+  const tAsc=Math.floor(norm(ascendant(jd,lat,lon))/30);
+  mirrors['Western']=[...SIGN_THEMES[Math.floor(trop.Sun/30)],...SIGN_THEMES[Math.floor(trop.Moon/30)],...SIGN_THEMES[tAsc]];
+  let numNote='';
+  if(name){
+    const c=nameNum(name,CH).red, p=nameNum(name,PY).red;
+    mirrors['Numerology (Chaldean)']=NUM_THEMES[c];
+    mirrors['Numerology (Pythagorean)']=NUM_THEMES[p];
+    if(c!==p) numNote=`<p class="hint">Note: the two numerologies entered this table already disagreeing with each other (${c} vs ${p}) — they count as separate voices for that reason.</p>`;
+  }
+  const count={};
+  Object.entries(mirrors).forEach(([mir,tags])=>{
+    [...new Set(tags)].forEach(t=>{ (count[t]=count[t]||new Set()).add(mir); });
+  });
+  const conv=Object.entries(count).filter(([t,s])=>s.size>=2).sort((a,b)=>b[1].size-a[1].size);
+  const solo=Object.entries(count).filter(([t,s])=>s.size===1);
+  const total=Object.keys(mirrors).length;
+  // find flat clashes: opposing theme pairs
+  const OPPOSE=[['impatience','steadiness'],['restlessness','steadiness'],['freedom','discipline'],['detachment','emotion'],['privacy','sociability'],['directness','indecision'],['stubbornness','balance']];
+  const clashes=OPPOSE.filter(([a,b])=>count[a]&&count[b]).map(([a,b])=>{
+    return `<b>${a}</b> (says ${[...count[a]].join(', ')}) vs <b>${b}</b> (says ${[...count[b]].join(', ')})`;
+  });
+  document.getElementById('syn-out').innerHTML=`
+    ${numNote}
+    <p style="margin-top:6px"><b style="color:var(--leaf)">Where the mirrors converge</b> <span class="hint">(a theme two or more independent systems both landed on):</span></p>
+    ${conv.length?`<div>${conv.map(([t,s])=>`<span class="pill"><b>${t}</b> <span class="hint">· ${s.size} of ${total} mirrors</span></span>`).join('')}</div>`:'<p class="empty">No theme reached agreement across two systems — the mirrors are describing different people today.</p>'}
+    <p style="margin-top:14px"><b style="color:var(--rose)">Where they flatly contradict each other:</b></p>
+    ${clashes.length?`<p class="hint">${clashes.join('<br>')}</p>`:'<p class="hint">No direct opposites this time — though sharing a vocabulary of only 36 themes makes some overlap mathematically guaranteed, which is itself worth knowing.</p>'}
+    <p style="margin-top:14px"><b style="color:var(--sky)">The one common output, honestly stated:</b></p>
+    <div class="verdict">${conv.length
+      ? `Across four independent traditions, the picture that survives comparison is: <b>${conv.slice(0,4).map(c=>c[0]).join(', ')}</b>. Hold it lightly — convergence between unproven systems is agreement, not evidence. But if these words also match what the people who know you would say, then you have something better than a prediction: a description you can actually use.`
+      : 'The mirrors could not agree on a single portrait. That is a finding, not a failure — it is what combining these systems honestly produces.'}
+    </div>
+    <p class="hint" style="margin-top:10px">Faal's contribution to the common output is deliberately different: it does not vote on your traits. Draw a verse in Mirror 4 with this combined portrait in mind, and notice what your own mind does with it — that response is the only part of this page unique to you.</p>`;
+}
+const EDU=[
+ ['1 · The base-rate machine','A statement true of almost everyone feels personal when said to you alone. “There is a government school near your family home” is true for nearly every house in India — the education system built it that way. Before crediting any hit, ask one question: <b>for how many people would this be false?</b> If the answer is “hardly anyone,” the prediction found the country, not you.','Test it yourself: ask five friends if there is a school, a temple, or a water tank near their childhood home. Your score will match any astrologer\'s.'],
+ ['2 · Elastic words','“Near.” “Soon.” “Someone close to you.” “A difficult period.” These words stretch to fit whatever exists. A prediction that cannot be wrong is not accurate — it is unfalsifiable, which is the opposite of accurate.','Fix: before the reading resolves, write down exactly what would count as a miss. If nothing could count, the prediction was empty when it was made.'],
+ ['3 · The survivor story','Hits get retold for years; misses evaporate in a week. Every astonishing prediction story you have ever heard is a survivor of this filter — including the ones in your own family. Nobody is lying; memory just works this way.','Fix: keep a reading diary. Write every prediction down on the day it is made, then grade the full list a year later. This single habit ends the magic for most people.'],
+ ['4 · The ritual of input','Being asked for a name, a palm, a birth time makes the output feel derived from you. The input is theatre when the output would be the same for anyone. You proved this in this very app: the same name got opposite verdicts from two numerologies.','Fix: ask what specifically in the input produced the conclusion. Watch the answer dissolve into vocabulary.'],
+ ['5 · The intimate escalation','The most exploitative version: “predictions” about what someone — usually a wife, usually absent — secretly desires. Notice three things. First, such claims can never be verified without someone reporting a person\'s private life to strangers, so “it came true” stories are always hearsay grown in the telling. Second, the claims flatter the listener\'s wishes, not the absent person\'s reality — that is the tell. Third, a “prediction” that a woman enjoys being secretly watched is not a reading; it is permission being manufactured for someone who wanted to watch. When a reading tells you what another person\'s body wants, you are not receiving information about them. You are being sold a license you should refuse to buy — and the only decent response is to ask the person, or accept that their inner life is theirs.','Protective rule for this whole app: questions about another person\'s desires are answered by that person, never about them. No exception for good stories.']
+];
+(function(){
+  const c=document.getElementById('edu-static');
+  if(c) c.innerHTML=EDU.map((e,i)=>`
+    <details class="house"${i===0?' open':''}>
+      <summary><span class="hn">${i+1}</span><span class="ht">${e[0].split('·')[1].trim()}</span></summary>
+      <div class="hbody">
+        <p class="kid">${e[1]}</p>
+        <p class="reality" style="border-top:1px dotted var(--line);padding-top:8px">${e[2]}</p>
+      </div>
+    </details>`).join('')+`
+    <div class="verdict high" style="margin-top:14px">Graduation test: next time any reading impresses you, run all five checks in under a minute — base rate, elastic words, survivorship, ritual input, and who benefits from believing it. A reading that survives all five is rarer than a vargottama Moon. Most will not survive the first.</div>`;
+})();
+const SPOUSE_TONE=['direct and energetic, quick to act, quick to flare','steady, comfort-loving, slow to change their mind','talkative, curious, needs mental company','caring, family-first, feelings run deep','warm, proud, wants to be appreciated','practical, helpful, notices every detail','fair-minded, social, avoids ugly fights','private, intense, loyal once committed','honest, freedom-loving, hates being fenced','responsible, reserved, shows love through duty','independent, friendly, needs their own space','gentle, imaginative, easily hurt by harshness'];
+function renderPeople(sid, lagnaSign, occupants, curLord){
+  const sect=(houseIdx, title, kid, extra, reality)=>{
+    const signIdx=(lagnaSign+houseIdx)%12;
+    const lord=SIGN_LORD[signIdx];
+    const lordHouse=((Math.floor(sid[lord]/30)-lagnaSign)+12)%12;
+    const occ=occupants[houseIdx]||[];
+    const active=curLord&&(occ.includes(curLord)||lord===curLord);
+    let says=`This bond carries the flavour of <b>${RASHI[signIdx]}</b>. Its caretaker ${lord} lives in room ${lordHouse+1}, linking this bond to that life area.`;
+    if(occ.length) says+=' '+occ.map(p=>PLANET_IN_HOUSE[p].charAt(0).toUpperCase()+PLANET_IN_HOUSE[p].slice(1)).join('. ')+'.';
+    if(extra) says+=' '+extra(signIdx);
+    if(active) says+=` <span class="active-ch">active chapter (${curLord})</span>`;
+    return `<details class="house"${active?' open':''}>
+      <summary><span class="hn">◆</span><span class="ht">${title}</span><span class="hs">${RASHI[signIdx].split(' ')[0]}</span></summary>
+      <div class="hbody">
+        <p class="kid">${kid}</p>
+        <p class="trad-says"><b style="color:var(--leaf)">What tradition says:</b> ${says}</p>
+        <p class="reality">${reality}</p>
+      </div></details>`;
+  };
+  let html='';
+  html+=sect(6,'Spouse / life partner','Tradition sketches the kind of partner-nature your chart "points toward" — a flavour, never a filter.',
+    s=>`Tradition describes the partner-nature as: <i>${SPOUSE_TONE[s]}</i>. Caution, said plainly: this sketch fits millions of people. Never reject a real, kind human because they don't match a paragraph — the paragraph was never about them.`,
+    'What actually reveals a good partner: how they treat you when they are tired, how they fight, and whether their words and actions match over months.');
+  html+=sect(4,'Children','The 5th room — kids, and everything childlike in you: play, creativity, first love.',null,
+    'What children actually need is boringly known: presence, patience, and parents who manage their own tempers. No chart improves on that list.');
+  html+=sect(3,'Mother & home side of family','Tradition reads the mother and the feeling of home from the 4th room.',null,
+    'The relationship with a parent is built in small repeated moments — calls, visits, listening — not in remedies.');
+  html+=sect(8,'Father & elders','Tradition reads the father, teachers and elders from the 9th room.',null,
+    'If there is distance with a father, the chart cannot close it; one honest conversation sometimes can. Timing: sooner beats later, always.');
+  html+=sect(1,'Extended family, in-laws & relatives','Tradition reads the wider family — including how you speak within it — from the 2nd room. In-laws arrive through the 7th\'s family.',null,
+    'In-law peace runs on three rails: clear boundaries agreed with your spouse first, respect shown even in disagreement, and money kept transparent. Charts have never settled a single kitchen dispute.');
+  html+=sect(10,'Friends & gains (increment lives here too)','The 11th room — friend circles, income growth, wishes coming true.',null,
+    'How increments actually happen: market rate known (ask around, check openly), your wins written down through the year, and the ask made clearly at review time. People who never ask are the most reliably underpaid group in every office. Friendships: measured by who shows up, which you already know how to track.');
+  html+=sect(5,'Colleagues, workplace rivals & daily grind','The 6th room — the people beside you at work, competition, and service.',null,
+    'Colleague trouble resolves through documentation and calm escalation, not confrontation. Rivals are best beaten by output. Keep records; keep temper.');
+  html+=sect(9,'Manager & authority','The 10th room — bosses, reputation, and how authority treats you.',null,
+    'Managing the manager is a skill: make their goals visible in your work, surface problems early with options attached, and never surprise them in public. That skill beats every career yoga in the classics.');
+  html+=`<details class="house"><summary><span class="hn">◆</span><span class="ht">Rise &amp; fall — progress in every aspect</span><span class="hs">Dasha view</span></summary>
+    <div class="hbody">
+      <p class="kid">Everyone rises and dips — the honest question is never "will there be a fall?" (there will), but "what decides how far and how long?"</p>
+      <p class="trad-says"><b style="color:var(--leaf)">What tradition says:</b> the dasha timeline above alternates by design — no chart grants an unbroken rise; each period lord colours its years, and even the classics read every "bad" period as carrying one door that only opens under pressure.</p>
+      <table style="margin:10px 0 8px;font-size:.82rem">
+        <tr><td style="color:var(--leaf);width:50%"><b>Do:</b> save in the rise, learn in the fall, keep relationships warm in both.</td><td style="color:var(--rose)"><b>Don't:</b> borrow against a rise as if it is permanent, or make permanent decisions in a temporary dip.</td></tr>
+        <tr><td style="color:var(--gold)"><b>Most expected:</b> falls end — nearly all of them; the recovery is usually built during the fall itself.</td><td style="color:var(--sky)"><b>Most unexpected:</b> the skills and people gathered during a fall often power the next rise higher than the last.</td></tr>
+      </table>
+      <p class="reality">What actually decides recovery: savings runway, skills that stay sellable, health protected, and the friends still there — the four things this whole app keeps pointing you toward. Progress in any aspect follows the same loop: honest measure of where you are, one small consistent action, review monthly. That loop needs no muhurta to start.</p>
+    </div></details>`;
+  document.getElementById('jy-people').innerHTML=html;
+}
+/* ---------------- quadrants: do / don't / expected / unexpected (patterns, not prophecies) ---------------- */
+const QUAD=[
+ {do:'Sleep on time, move daily, get the boring checkups.',dont:'Ignore small symptoms or compare your body to screens.',exp:'Energy follows routine — within weeks, not months.',unexp:'The biggest health wins come from dull habits, not intense bursts.'},
+ {do:'Build a 3–6 month emergency fund; look at spending once a month.',dont:'Lend money you could not afford to gift; speak in anger to family.',exp:'Savings grow slowly, then suddenly — the curve bends around year two.',unexp:'One careless sentence can cost more than one bad investment.'},
+ {do:'Practice the skill 20 minutes daily; ask siblings before assuming.',dont:'Wait to feel confident before starting.',exp:'Skill compounds over months — day 60 feels nothing like day 6.',unexp:'Courage usually arrives after the action, not before it.'},
+ {do:'Choose a home by commute, safety and papers verified twice.',dont:'Stretch housing beyond about a third of income; buy for show.',exp:'Peace at home follows how people speak inside it, not its size.',unexp:'The neighbours matter more than the "perfect" house.'},
+ {do:'Show up to class/practice; protect time for play and hobbies.',dont:'Compare one child to another out loud.',exp:'Results follow attendance with brutal reliability.',unexp:'Hobbies quietly become careers more often than plans do.'},
+ {do:'Keep health insurance active; see the doctor early; put debts on a written plan.',dont:'Take loans to impress anyone; feed rivalries with attention.',exp:'Most disputes end through paperwork and patience, not drama.',unexp:'Rivals shrink fastest when ignored completely.'},
+ {do:'Discuss money, children and both sets of parents before committing.',dont:'Outsource the decision to a score — any score, including this app\'s.',exp:'Repair skill after fights decides more than romance before them.',unexp:'Partnerships break on unspoken expectations far more than on arguments.'},
+ {do:'Keep insurance, nominees and a will updated; save before you must.',dont:'Sign anything you do not fully understand, however trusted the giver.',exp:'Big change arrives whether or not you planned — the plan decides the damage.',unexp:'A crisis is the most accurate friend-detector ever built.'},
+ {do:'Prepare so thoroughly that luck has somewhere to land.',dont:'Wait for a "good day" to begin what should begin today.',exp:'What looks like luck from outside is preparation meeting timing.',unexp:'Mentors tend to appear only after you have visibly started.'},
+ {do:'Build skills the market pays for; guard your reputation like capital.',dont:'Resign in anger without months of runway; badmouth an old employer.',exp:'Careers rise in steps and plateaus, not smooth lines.',unexp:'Reputation compounds silently for years, then opens a door all at once.'},
+ {do:'Give value to your circle before asking from it.',dont:'Measure friends by usefulness — that maths always returns to you.',exp:'Income follows the value you create, on a lag that tests patience.',unexp:'Networks pay off years later, from the person you least tracked.'},
+ {do:'Run a written monthly budget; plan any foreign move on paper first.',dont:'Chase tiny savings while a big leak (EMI, habit, subscription) runs.',exp:'Money leaks through small repeating holes, not big events.',unexp:'Letting go often turns out cheaper than the cost of holding on.'}
+];
+const NUM_PLANET={1:'Sun',2:'Moon',3:'Jupiter',4:'Rahu',5:'Mercury',6:'Venus',7:'Ketu',8:'Saturn',9:'Mars'};
+function readNumbers(){
+  const out=[];
+  const birth=chartA?reduce(parseInt((document.getElementById('in-date').value||'').split('-')[2]||0)||0):0;
+  [['n-mobile','Mobile number'],['n-vehicle','Vehicle number']].forEach(([id,label])=>{
+    const raw=(document.getElementById(id).value.match(/\d/g)||[]).join('');
+    if(!raw) return;
+    const sum=raw.split('').reduce((a,c)=>a+ +c,0), red=reduce(sum);
+    const planet=NUM_PLANET[red];
+    let compat='';
+    if(birth){
+      const bp=NUM_PLANET[birth];
+      if(FRIEND[planet]&&FRIEND[bp]){
+        const r1=rel(bp,planet);
+        compat = r1==='f' ? `Tradition calls ${red} a <b style="color:var(--leaf)">friendly</b> companion to your birth number ${birth}.`
+               : r1==='e' ? `Tradition calls ${red} an <b style="color:var(--rose)">uneasy</b> companion to your birth number ${birth}.`
+               : `Tradition calls ${red} a <b style="color:var(--gold)">neutral</b> companion to your birth number ${birth}.`;
+      } else compat=`Your birth number ${birth} or this number involves Rahu/Ketu — classical sources genuinely disagree on their friendships, so this tool will not pick a side.`;
+    }
+    out.push(`<p style="margin-top:12px"><b>${label}:</b> digits sum to ${sum} → <span class="big">${red}</span> <span class="hint">(${NUMGIST[red]}, planet: ${planet})</span><br><span class="hint">${compat}</span></p>`);
+  });
+  document.getElementById('numco-out').innerHTML = out.length
+    ? out.join('')+`<div class="honesty" style="margin-top:14px"><div class="hh">Honesty panel</div><div class="hb">
+        <p><span class="lbl says">What tradition says —</span> the readings above are the standard number-planet assignments, computed correctly.</p>
+        <p><span class="lbl cant">What it cannot do —</span> no digit has ever improved network coverage, mileage, or safety. Thousands of people share your exact number-total today and are having completely different days.</p>
+        <p><span class="lbl real">What actually protects you —</span> for the phone: strong passwords and not clicking unknown links. For the vehicle: maintenance, insurance, and how you drive. If changing a number brings peace of mind, it is a cheap comfort — just never let it replace the list above.</p></div></div>`
+    : '<p class="empty">Enter at least one number above.</p>';
+}
+function downloadReport(){
+  const res=document.getElementById('results');
+  if(!res || res.style.display==='none'){ alert('Compute your chart first — the report packs everything you see on screen.'); return; }
+  const css=document.querySelector('style').innerHTML;
+  const name=document.getElementById('in-name').value.trim()||'My';
+  const doc=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Four Mirrors — Full Report</title><style>${css} details>*{display:block} .card{page-break-inside:avoid}</style></head>
+  <body><header><h1>Four <b>Mirrors</b> — Full Report</h1><p>${name} · generated ${new Date().toISOString().slice(0,10)} · computed on-device, ±1° engine, honesty panels included by design</p></header>
+  <main>${res.innerHTML.replace(/<details/g,'<details open')}</main>
+  <p class="footer-note">This report shows what four traditions say and what they cannot say. It predicts nothing. Decisions about health, money, marriage and law belong with doctors, planners, honest conversation and lawyers.</p></body></html>`;
+  const blob=new Blob([doc],{type:'text/html'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='four-mirrors-report.html';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+/* ---------------- record book (device-only storage, consent-gated) ---------------- */
+const REC_KEY='fourmirrors_records_v1';
+function recLoad(){
+  try{ return JSON.parse(localStorage.getItem(REC_KEY)||'[]'); }
+  catch(e){ return []; }
+}
+function recSave(list){
+  try{ localStorage.setItem(REC_KEY, JSON.stringify(list)); return true; }
+  catch(e){ alert('Could not save to this device. If you are in a private/incognito window, storage is blocked — use a normal window.'); return false; }
+}
+function saveRecord(){
+  if(!chartA){ alert('Compute a chart first — there is nothing to save yet.'); return; }
+  if(!document.getElementById('rec-ok').checked){
+    alert('The consent box must be ticked.\n\nThis is not a formality: storing a person\'s birth details and readings without telling them is exactly what this app refuses to be. Tell them, then tick it.');
+    return;
+  }
+  const rec={
+    id:'r'+Date.now(),
+    name:document.getElementById('in-name').value.trim()||'(no name)',
+    date:document.getElementById('in-date').value,
+    time:document.getElementById('in-time').value,
+    place:document.getElementById('in-city').value||`${document.getElementById('in-lat').value}, ${document.getElementById('in-lon').value}`,
+    lat:document.getElementById('in-lat').value,
+    lon:document.getElementById('in-lon').value,
+    tz:document.getElementById('in-tz').value,
+    mobile:document.getElementById('n-mobile').value||'',
+    vehicle:document.getElementById('n-vehicle').value||'',
+    note:document.getElementById('rec-note').value.trim(),
+    reading:document.getElementById('results').innerHTML,
+    consentAt:new Date().toISOString(),
+    savedAt:new Date().toISOString().slice(0,16).replace('T',' ')
+  };
+  const list=recLoad(); list.unshift(rec);
+  if(recSave(list)){
+    document.getElementById('rec-ok').checked=false;
+    document.getElementById('rec-note').value='';
+    renderRecords();
+  }
+}
+function delRecord(id){
+  const list=recLoad();
+  const r=list.find(x=>x.id===id);
+  if(!confirm('Delete the record for '+(r?r.name:'this person')+' permanently?\n\nIf they asked you to remove it, this is the right button.')) return;
+  recSave(list.filter(x=>x.id!==id));
+  renderRecords();
+}
+function openRecord(id){
+  const r=recLoad().find(x=>x.id===id); if(!r) return;
+  const w=window.open('','_blank');
+  const css=document.querySelector('style').innerHTML;
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${r.name} — Four Mirrors record</title><style>${css} details>*{display:block}</style></head><body>
+    <header><h1>Four <b>Mirrors</b> — saved record</h1><p>${r.name} · born ${r.date} ${r.time} · ${r.place} · saved ${r.savedAt}${r.note?' · '+r.note:''}</p></header>
+    <main>${r.reading.replace(/<details/g,'<details open')}</main></body></html>`);
+  w.document.close();
+}
+function renderRecords(){
+  const list=recLoad();
+  const c=document.getElementById('rec-list');
+  if(!list.length){ c.innerHTML='<p class="empty">No records yet. Compute a chart, get consent, then save.</p>'; return; }
+  c.innerHTML=`<p class="hint">${list.length} record${list.length>1?'s':''} on this device. <b>Nothing is on any server.</b> If this device is lost, so are they — export a backup.</p>
+    <input type="text" id="rec-search" placeholder="Search by name…" oninput="filterRecords()" style="margin-bottom:8px">
+    <div id="rec-rows">${list.map(r=>`
+      <div class="tl-row" data-name="${(r.name||'').toLowerCase()}">
+        <span class="yrs mono">${r.savedAt}</span>
+        <span class="lord" style="min-width:120px">${r.name}</span>
+        <span class="gist">${r.date||'?'} ${r.time||''} · ${r.place||''}${r.note?' · '+r.note:''}</span>
+        <button class="delx" onclick="openRecord('${r.id}')" title="Open">↗</button>
+        <button class="delx" onclick="delRecord('${r.id}')" title="Delete">✕</button>
+      </div>`).join('')}</div>`;
+}
+function filterRecords(){
+  const q=(document.getElementById('rec-search').value||'').toLowerCase();
+  document.querySelectorAll('#rec-rows .tl-row').forEach(row=>{
+    row.style.display = row.dataset.name.includes(q) ? 'flex' : 'none';
+  });
+}
+function exportRecords(){
+  const list=recLoad();
+  if(!list.length){ alert('Nothing to export yet.'); return; }
+  const blob=new Blob([JSON.stringify({app:'Four Mirrors', exported:new Date().toISOString(), records:list},null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='four-mirrors-records-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  alert('Backup file downloaded.\n\nIt contains birth details and full readings for '+list.length+' people. Keep it somewhere private — treat it like their documents, because it is.');
+}
+function importRecords(ev){
+  const f=ev.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=()=>{
+    try{
+      const data=JSON.parse(rd.result);
+      const incoming=data.records||[];
+      if(!Array.isArray(incoming)||!incoming.length){ alert('That file has no records in it.'); return; }
+      const list=recLoad();
+      const ids=new Set(list.map(r=>r.id));
+      const merged=list.concat(incoming.filter(r=>!ids.has(r.id)));
+      if(recSave(merged)){ renderRecords(); alert('Imported. Record book now holds '+merged.length+' entries.'); }
+    }catch(e){ alert('That file could not be read as a Four Mirrors backup.'); }
+    ev.target.value='';
+  };
+  rd.readAsText(f);
+}
+document.addEventListener('DOMContentLoaded', renderRecords);
+/* ---------------- faal (original reflections, honestly labeled) ---------------- */
+const FAAL=[
+ ['The door you keep checking is not locked;','it is waiting for your hand to stop trembling.'],
+ ['What you buried in silence has grown roots.','Dig gently — you planted it for a reason.'],
+ ['The caravan does not ask the road for permission.','It walks, and the road appears behind it.'],
+ ['You have been reading the letter upside down.','Turn it: the same words, a kinder meaning.'],
+ ['The lamp complains of darkness','while standing on its own shadow.'],
+ ['Ask the question aloud to the one it concerns.','Echoes have been answering you long enough.'],
+ ['The river does not negotiate with the stone;','it goes around, and arrives anyway.'],
+ ['What you fear losing is already yours or already gone.','Either way, the fear is the only thing to drop.'],
+ ['The gardener does not pull the seedling up to check the roots.','Water it, and busy yourself elsewhere.'],
+ ['Two birds argued over which sky was real.','Both were flying the whole time.'],
+ ['The guest you keep preparing the house for','has been sitting inside you, waiting to be fed.'],
+ ['Patience is not the absence of walking;','it is walking without demanding the milestone.']
+];
+function drawFaal(){
+  const v=FAAL[Math.floor(Math.random()*FAAL.length)];
+  document.getElementById('faal-out').innerHTML=`
+    <div style="margin-top:16px;padding:18px;border:1px solid var(--line);border-radius:6px;text-align:center">
+      <p style="font-size:1.05rem;font-style:italic">${v[0]}<br>${v[1]}</p>
+      <p class="hint" style="margin-top:10px;margin-bottom:0">An original reflection in the Faal spirit — not a prophecy, and not the words of any classical poet. If it moved something in you, that movement was already yours: the verse only knocked. What did your own mind answer? That answer is the reading.</p>
+    </div>`;
+}
+/* ---------------- ui ---------------- */
+function cityPick(){
+  const c=findCity(document.getElementById('in-city').value);
+  if(!c) return;
+  document.getElementById('in-lat').value=c[1];
+  document.getElementById('in-lon').value=c[2];
+  document.getElementById('in-tz').value=5.5;
+}
+function cityPickB(){
+  const c=findCity(document.getElementById('b-city').value);
+  if(!c) return;
+  document.getElementById('b-lat').value=c[1];
+  document.getElementById('b-lon').value=c[2];
+  document.getElementById('b-tz').value=5.5;
+}
+function fmtDeg(x){ const s=Math.floor(x%30); return s+'°'+String(Math.floor((x%1)*60)).padStart(2,'0')+"'"; }
+
+function run(){
+  if(!document.getElementById('self-check').checked){
+    alert('This tool reads only your own chart. Please tick the box confirming these are your own birth details.\n\nWhy so strict? Because readings made about other people behind their backs get used against them. About yourself, read freely.');
+    return;
+  }
+  try{
+  const name=document.getElementById('in-name').value.trim();
+  const dateV=document.getElementById('in-date').value;
+  const timeV=document.getElementById('in-time').value||'12:00';
+  let lat=parseFloat(document.getElementById('in-lat').value);
+  let lon=parseFloat(document.getElementById('in-lon').value);
+  let tz=parseFloat(document.getElementById('in-tz').value);
+  if(!dateV){ alert('Date of birth is the one thing the mirrors cannot work without.'); return; }
+  if(isNaN(tz)) tz=5.5;
+  let approxNote='';
+  if(isNaN(lat)||isNaN(lon)){
+    const guess=findCity(document.getElementById('in-city').value);
+    if(guess){ lat=guess[1]; lon=guess[2]; }
+    else { lat=21.15; lon=79.09;
+      approxNote='<p class="hint" style="color:var(--gold)">&#9888; Birth place was missing or not recognised, so a central-India location was used. Moon sign, nakshatra and dasha barely change with place — but the lagna (rising sign) and the 12 rooms can shift. Type a city from the list and re-run for the full-accuracy chart.</p>';
+    }
+  }
+  const [Y,Mo,Dd]=dateV.split('-').map(Number);
+  const [hh,mm]=timeV.split(':').map(Number);
+  const ut=hh+mm/60-tz;
+  const jd=julianDay(Y,Mo,Dd,ut);
+  const ay=ayanamsa(jd);
+  const trop=computeAll(jd);
+  const sid={}; for(const k in trop) sid[k]=norm(trop[k]-ay);
+  const ascSid=norm(ascendant(jd,lat,lon)-ay);
+
+  // Jyotish core
+  const lagnaSign=Math.floor(ascSid/30), moonSign=Math.floor(sid.Moon/30), sunSign=Math.floor(sid.Sun/30);
+  const nakIdx=Math.floor(sid.Moon/(360/27)), nakFrac=(sid.Moon%(360/27))/(360/27);
+  document.getElementById('jy-core').innerHTML=`
+    ${approxNote}
+    <span class="pill"><b>Lagna:</b> ${RASHI[lagnaSign]} <span class="mono" style="color:var(--dim)">${fmtDeg(ascSid)}</span></span>
+    <span class="pill"><b>Moon rashi:</b> ${RASHI[moonSign]}</span>
+    <span class="pill"><b>Sun rashi:</b> ${RASHI[sunSign]}</span>
+    <span class="pill"><b>Nakshatra:</b> ${NAK[nakIdx]} (pada ${Math.floor(nakFrac*4)+1})</span>
+    <p class="hint" style="margin-top:10px">Tradition reads this lagna as: <i>${LAGNA_GIST[lagnaSign]}</i>. Remember — one twelfth of all humans share it.</p>`;
+
+  // planet table
+  const order=['Sun','Moon','Mercury','Venus','Mars','Jupiter','Saturn','Rahu','Ketu'];
+  document.getElementById('jy-planets').innerHTML=
+    '<tr><th>Planet (graha)</th><th>Sidereal position</th><th>Rashi</th></tr>'+
+    order.map(p=>{
+      const within=sid[p]%30;
+      const edge=within<1||within>29;
+      return `<tr><td>${p}</td><td class="mono">${fmtDeg(sid[p])}${edge?' <span style="color:var(--gold)">⚠</span>':''}</td><td>${RASHI[Math.floor(sid[p]/30)]}${edge?' <span class="hint">(very close to the border — the next sign is possible; a high-precision ephemeris should confirm)</span>':''}</td></tr>`;
+    }).join('');
+
+  // navamsa (D9)
+  const navOf=lon=>{
+    const s=Math.floor(lon/30), part=Math.floor((lon%30)/(30/9));
+    const start = s%3===0 ? s : s%3===1 ? (s+8)%12 : (s+4)%12; // movable: same; fixed: 9th; dual: 5th
+    return (start+part)%12;
+  };
+  document.getElementById('jy-navamsa').innerHTML=
+    '<tr><th>Planet</th><th>Main chart (D1)</th><th>Navamsa (D9)</th></tr>'+
+    order.map(p=>`<tr><td>${p}</td><td>${RASHI[Math.floor(sid[p]/30)].split(' ')[0]}</td><td>${RASHI[navOf(sid[p])].split(' ')[0]}</td></tr>`).join('')+
+    `<tr><td>Lagna</td><td>${RASHI[lagnaSign].split(' ')[0]}</td><td>${RASHI[navOf(ascSid)].split(' ')[0]}</td></tr>`;
+
+  // Vimshottari dasha
+  const lordIdx=nakIdx%9;
+  const firstLord=DASHA_SEQ[lordIdx];
+  const balanceYears=firstLord[1]*(1-nakFrac);
+  const birth=new Date(Date.UTC(Y,Mo-1,Dd,hh,mm)); 
+  let cursor=new Date(birth);
+  const addY=(dt,y)=>new Date(dt.getTime()+y*365.25*24*3600*1000);
+  const rows=[]; let idx=lordIdx, first=true;
+  let end=addY(cursor, balanceYears);
+  rows.push({lord:firstLord[0], from:new Date(cursor), to:new Date(end)});
+  cursor=end; idx=(idx+1)%9;
+  for(let i=0;i<8;i++){
+    end=addY(cursor,DASHA_SEQ[idx][1]);
+    rows.push({lord:DASHA_SEQ[idx][0], from:new Date(cursor), to:new Date(end)});
+    cursor=end; idx=(idx+1)%9;
+  }
+  const now=new Date();
+  let current=rows.find(r=>now>=r.from&&now<r.to);
+  // antardasha inside current
+  let antHtml='';
+  if(current){
+    const mdYears=(current.to-current.from)/(365.25*24*3600*1000);
+    let startIdx=DASHA_SEQ.findIndex(s=>s[0]===current.lord);
+    let c2=new Date(current.from);
+    for(let i=0;i<9;i++){
+      const sub=DASHA_SEQ[(startIdx+i)%9];
+      const len=mdYears*sub[1]/120;
+      const e2=addY(c2,len);
+      if(now>=c2&&now<e2){
+        antHtml=`<p class="hint" style="margin-top:8px">Current sub-chapter (antardasha): <b style="color:var(--gold)">${current.lord} – ${sub[0]}</b>, until about ${e2.toISOString().slice(0,10)}. Tradition blends both planets' themes here.</p>`;
+        break;
+      }
+      c2=e2;
+    }
+  }
+  document.getElementById('jy-dasha').innerHTML=
+    '<div class="timeline">'+rows.map(r=>{
+      const isNow=current&&r.lord===current.lord&&r.from.getTime()===current.from.getTime();
+      const tense = isNow?'now' : (r.to<now?'past':'future');
+      const tag = tense==='now'?'◂ NOW':tense==='past'?'past':'ahead';
+      return `<div class="tl-row${isNow?' now':''}">
+        <span class="yrs mono">${r.from.toISOString().slice(0,10)} →</span>
+        <span class="lord">${r.lord} <span class="hint" style="font-size:.62rem">${tag}</span></span>
+        <span class="gist">${DASHA_GIST[r.lord]}</span></div>`;
+    }).join('')+'</div>'+antHtml+
+    (()=>{
+      const past=rows.filter(r=>r.to<now), future=rows.filter(r=>r.from>now);
+      return `<div style="margin-top:14px">
+        <p><b style="color:var(--dim)">Your past, as tradition frames it:</b> <span class="hint">${past.length?past.map(r=>`the ${r.lord} years (${r.from.getFullYear()}–${r.to.getFullYear()}) — ${DASHA_GIST[r.lord].replace('tradition: ','')}`).join('; ')+'. Check these against your own memory — that check, not the chapters, tells you how much weight to give this system.':'no completed chapters yet — the story is all ahead.'}</span></p>
+        <p style="margin-top:8px"><b style="color:var(--gold)">Your present:</b> <span class="hint">${current?`the ${current.lord} chapter, until about ${current.to.getFullYear()} — ${DASHA_GIST[current.lord].replace('tradition: ','')}.`:'between computed chapters.'}</span></p>
+        <p style="margin-top:8px"><b style="color:var(--sky)">Your future, honestly framed:</b> <span class="hint">${future.slice(0,3).map(r=>`${r.lord} from ${r.from.getFullYear()} — ${DASHA_GIST[r.lord].replace('tradition: ','')}`).join('; ')}. This is tradition's <i>schedule of themes</i>, computed correctly — it is not a prophecy. The same calendar belongs to everyone who shares your Moon nakshatra. What the years actually contain is built by choices, health, savings and the people you keep — the schedule just names which flavour tradition expects.</span></p>
+      </div>`;
+    })();
+
+  // 12 life areas (whole-sign houses)
+  const occupants = {}; // houseIdx -> [planets]
+  order.forEach(p=>{
+    const h = ((Math.floor(sid[p]/30) - lagnaSign) + 12) % 12;
+    (occupants[h]=occupants[h]||[]).push(p);
+  });
+  const curLord = current ? current.lord : null;
+  // graha drishti: which planets gaze at each house
+  const DRISHTI_GIST={Sun:'exposure & authority',Moon:'feeling & care',Mercury:'discussion & cleverness',Venus:'softening & charm',Mars:'heat & urgency',Jupiter:'protection & growth',Saturn:'slowing & testing'};
+  const aspectsOn=Array.from({length:12},()=>[]);
+  ['Sun','Moon','Mercury','Venus','Mars','Jupiter','Saturn'].forEach(p=>{
+    const h=((Math.floor(sid[p]/30)-lagnaSign)+12)%12;
+    let offs=[6];
+    if(p==='Mars') offs=[3,6,7];
+    if(p==='Jupiter') offs=[4,6,8];
+    if(p==='Saturn') offs=[2,6,9];
+    offs.forEach(o=>aspectsOn[(h+o)%12].push(p));
+  });
+  document.getElementById('jy-houses').innerHTML = HOUSES.map((H,i)=>{
+    const signIdx=(lagnaSign+i)%12;
+    const lord=SIGN_LORD[signIdx];
+    const lordHouse=((Math.floor(sid[lord]/30)-lagnaSign)+12)%12;
+    const inHouse=occupants[i]||[];
+    const dashaActive = curLord && (inHouse.includes(curLord) || lord===curLord);
+    let saysLines=[];
+    saysLines.push(`This room carries the flavour of <b>${RASHI[signIdx]}</b> (${LAGNA_GIST[signIdx]}).`);
+    saysLines.push(`Its caretaker planet is <b>${lord}</b>, who lives in room ${lordHouse+1} (“${HOUSES[lordHouse].t.split('—')[0].split(',')[0].trim()}”) — tradition links these two areas of life together.`);
+    if(inHouse.length) inHouse.forEach(p=> saysLines.push(PLANET_IN_HOUSE[p].charAt(0).toUpperCase()+PLANET_IN_HOUSE[p].slice(1)+'.'));
+    else saysLines.push('No planet lives in this room — tradition says it then follows its caretaker’s condition, quietly.');
+    if(aspectsOn[i].length) saysLines.push(`Watched from across the chart (drishti — a planet's “gaze”): ${aspectsOn[i].map(p=>`<b>${p}</b> brings ${DRISHTI_GIST[p]}`).join('; ')}.`);
+    if(dashaActive) saysLines.push(`Your current life-chapter planet (<b>${curLord}</b> mahadasha) touches this room — tradition marks this area as <b>active right now</b>.`);
+    return `<details class="house"${dashaActive?' open':''}>
+      <summary><span class="hn">${i+1}</span><span class="ht">${H.t}${dashaActive?'<span class="active-ch">active chapter</span>':''}</span><span class="hs">${RASHI[signIdx].split(' ')[0]}</span></summary>
+      <div class="hbody">
+        <p class="kid">${H.kid}</p>
+        <p class="trad-says"><b style="color:var(--leaf)">What tradition says:</b> ${saysLines.join(' ')}</p>
+        <table style="margin:10px 0 8px;font-size:.82rem">
+          <tr><td style="color:var(--leaf);width:50%"><b>Do:</b> ${QUAD[i].do}</td><td style="color:var(--rose)"><b>Don't:</b> ${QUAD[i].dont}</td></tr>
+          <tr><td style="color:var(--gold)"><b>Most expected:</b> ${QUAD[i].exp}</td><td style="color:var(--sky)"><b>Most unexpected:</b> ${QUAD[i].unexp}</td></tr>
+        </table>
+        <p class="hint" style="margin:0 0 8px">The Do/Don't rows are life patterns that hold for everyone, kid — not planet commands. The expected/unexpected rows are what usually happens and what usually surprises, drawn from how life goes, not from where Mars sits.</p>
+        <p class="reality">${H.real}</p>
+      </div>
+    </details>`;
+  }).join('');
+
+  // intimacy & married life
+  const VENUS_SIGN_TONE=['quick to warm, direct in affection','sensual, steady, touch-loving','playful, flirt-through-words','tender, emotional closeness first','warm, generous, likes admiration','affection shown through care, a little shy','romantic, harmony-seeking, aesthetic','intense, deeply private, all-or-nothing','fun-loving, freedom needs space','reserved outside, loyal inside','friendly, unconventional, needs mental spark','dreamy, giving, easily merged'];
+  const MARS_TONE=['strong, impatient desire','slow-burning, persistent','desire follows conversation and play','moody desire, tied to emotional safety','proud, passionate, generous','desire expressed carefully, precisely','desire needs beauty and balance','powerful, deep, possessive currents','enthusiastic, adventurous','controlled, disciplined, endurance','experimental, detached at times','romantic imagination leads'];
+  const vSign=Math.floor(sid.Venus/30), mSign=Math.floor(sid.Mars/30);
+  const vHouse=((vSign-lagnaSign)+12)%12, mHouse=((mSign-lagnaSign)+12)%12;
+  const intiRooms=[6,7,11]; // 7th,8th,12th (index 6,7,11)
+  let intiLines=[];
+  intiLines.push(`<b>Venus</b> in ${RASHI[vSign]} — tradition reads the style of affection as: <i>${VENUS_SIGN_TONE[vSign]}</i>.`);
+  intiLines.push(`<b>Mars</b> in ${RASHI[mSign]} — tradition reads desire as: <i>${MARS_TONE[mSign]}</i>.`);
+  intiRooms.forEach(r=>{
+    const occ=(occupants[r]||[]);
+    const label=r===6?'7th room (partnership & attraction)':r===7?'8th room (depth, intimacy & merging)':'12th room (bed comforts & private life)';
+    if(occ.length) intiLines.push(`${label}: ${occ.map(p=>PLANET_IN_HOUSE[p]).join('; ')}.`);
+  });
+  if(curLord && (['Venus','Mars'].includes(curLord) || intiRooms.some(r=>(occupants[r]||[]).includes(curLord))))
+    intiLines.push(`Tradition marks the private side of life as <b>touched by the current chapter</b> (${curLord} mahadasha).`);
+  document.getElementById('jy-intimacy').innerHTML=`
+    <div class="hbody" style="padding:0">
+      <p class="trad-says" style="margin-bottom:8px"><b style="color:var(--leaf)">What tradition says:</b> ${intiLines.join(' ')}</p>
+      <p class="reality" style="border-top:1px dotted var(--line);padding-top:8px;color:var(--sky);font-style:italic;font-size:.8rem">What actually shapes intimacy: trust, communication, kindness outside the bedroom, health, and consent. A chart describes none of these. If something is genuinely wrong, a doctor or counsellor helps; a gemstone does not.</p>
+    </div>`;
+
+  // character & values (dharma) — significations only, no verdicts
+  const jSign=Math.floor(sid.Jupiter/30), meSign=Math.floor(sid.Mercury/30), saSign=Math.floor(sid.Saturn/30);
+  const ninthOcc=(occupants[8]||[]);
+  let dhLines=[];
+  dhLines.push(`<b>Jupiter</b> (tradition's planet of wisdom & conscience) sits in ${RASHI[jSign]}, room ${(((jSign-lagnaSign)+12)%12)+1}.`);
+  dhLines.push(`<b>Mercury</b> (speech & reasoning) sits in ${RASHI[meSign]} — tradition reads the <i>style</i> of speech from this, never its truthfulness.`);
+  dhLines.push(`<b>Saturn</b> (duty & discipline) sits in ${RASHI[saSign]} — tradition links it to how obligations are carried.`);
+  dhLines.push(ninthOcc.length
+    ? `The 9th room (dharma — beliefs & guiding principles) is occupied: ${ninthOcc.map(p=>PLANET_IN_HOUSE[p]).join('; ')}.`
+    : `The 9th room (dharma — beliefs & guiding principles) is empty — tradition then reads it through its caretaker, ${SIGN_LORD[(lagnaSign+8)%12]}.`);
+  document.getElementById('jy-dharma').innerHTML=`
+    <div class="hbody" style="padding:0">
+      <p class="trad-says" style="margin-bottom:8px"><b style="color:var(--leaf)">What tradition associates:</b> ${dhLines.join(' ')}</p>
+      <p class="reality" style="border-top:1px dotted var(--line);padding-top:8px;color:var(--sky);font-style:italic;font-size:.8rem">What actually reveals character: how a person treats people who can do nothing for them, whether promises are kept when keeping them costs something, and what they do when no one is watching. Twelve months of watching beats twelve houses of chart.</p>
+    </div>`;
+
+  // job or business
+  const tenthSign=(lagnaSign+9)%12;
+  const signType=['movable','fixed','dual'][tenthSign%3];
+  const typeTxt={movable:'a movable sign — tradition leans this toward self-started work, changes, and business-friendly energy',
+                 fixed:'a fixed sign — tradition leans this toward stable roles, long service, and institutions',
+                 dual:'a dual sign — tradition reads a mix: a job that grows side ventures, or business built on a service skill'}[signType];
+  const tenthLord=SIGN_LORD[tenthSign];
+  const tenthLordHouse=((Math.floor(sid[tenthLord]/30)-lagnaSign)+12)%12;
+  const strong=(p,own,ex)=> own.includes(Math.floor(sid[p]/30)) ? 'own sign (strong)' : Math.floor(sid[p]/30)===ex ? 'exalted (very strong)' : null;
+  const merc=strong('Mercury',[2,5],5), sat=strong('Saturn',[9,10],6), mars=strong('Mars',[0,7],9);
+  let signals=[];
+  if(merc) signals.push(`Mercury (trade & negotiation) is in ${merc} — tradition counts this a business signal`);
+  if(sat) signals.push(`Saturn (service & endurance) is in ${sat} — tradition counts this a long-career signal`);
+  if(mars) signals.push(`Mars (independent drive) is in ${mars} — tradition counts this a work-for-yourself signal`);
+  if((occupants[9]||[]).includes('Sun')) signals.push('the Sun stands in the career room itself — tradition reads authority, government, or leadership flavour');
+  document.getElementById('jy-work').innerHTML=`
+    <div class="hbody" style="padding:0">
+      <p class="trad-says" style="margin-bottom:8px"><b style="color:var(--leaf)">What tradition says:</b>
+      The career room (10th) carries ${RASHI[tenthSign]}, ${typeTxt}. Its caretaker ${tenthLord} lives in room ${tenthLordHouse+1} (“${HOUSES[tenthLordHouse].t.split('—')[0].split(',')[0].trim()}”) — tradition links earning to that area of life.
+      ${signals.length? 'Strength signals: '+signals.join('; ')+'.' : 'No planet stands in special strength for this question — tradition would call the leaning mild either way.'}
+      ${(occupants[9]||[]).length? 'Planets in the career room: '+(occupants[9]||[]).map(p=>PLANET_IN_HOUSE[p]).join('; ')+'.' : ''}</p>
+      <p class="reality" style="border-top:1px dotted var(--line);padding-top:8px;color:var(--sky);font-style:italic;font-size:.8rem">What actually decides job vs business: for a job — skills the market pays for. For a business — paying customers, capital to survive slow months, and 10 real customer conversations before spending money. Many people do both: keep the job, test the business small. No chart is needed for that plan, and no chart should delay it.</p>
+    </div>`;
+
+  // spiritual life
+  const kSign=Math.floor(sid.Ketu/30), kHouse=((kSign-lagnaSign)+12)%12;
+  const jHouse=((jSign-lagnaSign)+12)%12;
+  const fifthOcc=(occupants[4]||[]), twelfthOcc=(occupants[11]||[]);
+  let spLines=[];
+  spLines.push(`<b>Ketu</b>, tradition's moksha planet, sits in ${RASHI[kSign]} in room ${kHouse+1} (“${HOUSES[kHouse].t.split('—')[0].split(',')[0].trim()}”) — tradition reads this as the life area you are learning to hold lightly, and through which detachment teaches you.`);
+  spLines.push(`<b>Jupiter</b>, the guru, guides from room ${jHouse+1} — tradition says teachers, wisdom and blessings reach you through that area of life.`);
+  spLines.push(fifthOcc.length
+    ? `The 5th room (merit carried in — purva punya) holds: ${fifthOcc.map(p=>PLANET_IN_HOUSE[p]).join('; ')}.`
+    : `The 5th room (merit carried in — purva punya) is quiet — tradition reads it through its caretaker, ${SIGN_LORD[(lagnaSign+4)%12]}.`);
+  spLines.push(twelfthOcc.length
+    ? `The 12th room (liberation, retreat, surrender) holds: ${twelfthOcc.map(p=>PLANET_IN_HOUSE[p]).join('; ')}.`
+    : `The 12th room (liberation, retreat, surrender) is quiet — tradition calls that an unhurried inner path.`);
+  if(curLord && (curLord==='Ketu'||curLord==='Jupiter'||curLord==='Saturn'))
+    spLines.push(`Your current chapter (${curLord} mahadasha) is one tradition considers naturally inward-turning — a period when spiritual practice is said to come easier.`);
+  document.getElementById('jy-spirit').innerHTML=`
+    <div class="hbody" style="padding:0">
+      <p class="trad-says" style="margin-bottom:8px"><b style="color:var(--leaf)">What tradition says:</b> ${spLines.join(' ')}</p>
+      <p class="reality" style="border-top:1px dotted var(--line);padding-top:8px;color:var(--sky);font-style:italic;font-size:.8rem">Said with respect, because this part of life is real to people: what deepens a spiritual life is practice — prayer, meditation, seva (service), honesty, and time with people who bring out your better self. Those work in every tradition and need no chart. If a reading ever asks you to buy something to fix your soul, walk away; no genuine path charges admission through a gemstone.</p>
+    </div>`;
+
+  chartA={sid, lagnaSign, moonSign, nakIdx, trop, jd, lat, lon};
+
+  // WESTERN (tropical) — full coverage
+  const WSIGN=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+  const WSUN=['bold starter, hates waiting','patient builder, loves comfort','quick talker, easily bored','feeling-first, protects its people','warm performer, needs appreciation','careful improver, spots every flaw','fairness-seeker, hates choosing','intense, all-in or all-out','honest wanderer, allergic to cages','quiet climber, plays the long game','independent thinker, walks its own road','soft dreamer, feels everything'];
+  const WROLE={Sun:'your core self',Moon:'your inner weather',Mercury:'your mind & talk',Venus:'your love style',Mars:'your drive & temper',Jupiter:'where you grow & get lucky',Saturn:'where life tests you',Uranus:'your generation\'s rebellion',Neptune:'your generation\'s dream',Pluto:'your generation\'s obsession'};
+  const tropAscSign=Math.floor(norm(ascendant(jd,lat,lon))/30);
+  // Midheaven (MC)
+  const dmc=jd-2451545.0;
+  const lstDeg=norm(norm(280.46061837+360.98564736629*dmc)+lon);
+  const epsD=(23.4393-3.563e-7*(jd-2451543.5))*D2R;
+  const mcTrop=norm(Math.atan2(Math.sin(lstDeg*D2R), Math.cos(lstDeg*D2R)*Math.cos(epsD))*R2D);
+  const mcSign=Math.floor(mcTrop/30);
+  // weekday lord (vaara)
+  const dow=new Date(Date.UTC(Y,Mo-1,Dd)).getUTCDay();
+  const VAARA=[['Sunday','Sun','warmth, visibility, a touch of pride'],['Monday','Moon','feeling, care, changing moods'],['Tuesday','Mars','courage, hurry, a quick temper'],['Wednesday','Mercury','wit, trade, a busy mind'],['Thursday','Jupiter','generosity, luck, big-picture thinking'],['Friday','Venus','charm, beauty, love of comfort'],['Saturday','Saturn','patience, duty, slow steady wins']][dow];
+  const WP=['Sun','Moon','Mercury','Venus','Mars','Jupiter','Saturn','Uranus','Neptune','Pluto'];
+  document.getElementById('we-out').innerHTML=`
+    <span class="pill"><b>Sun:</b> ${WSIGN[wSunCalc(trop)]}</span>
+    <span class="pill"><b>Moon:</b> ${WSIGN[Math.floor(trop.Moon/30)]}</span>
+    <span class="pill"><b>Rising:</b> ${WSIGN[tropAscSign]}</span>
+    <span class="pill"><b>Midheaven:</b> ${WSIGN[mcSign]}</span>
+    <span class="pill"><b>Born on:</b> ${VAARA[0]} — day of ${VAARA[1]}</span>
+    <table style="margin-top:12px">
+      <tr><th>Planet</th><th>Sign</th><th>Role (Western tradition)</th><th>Reading</th></tr>
+      ${WP.map(p=>{
+        const s=Math.floor(trop[p]/30);
+        const gen=['Uranus','Neptune','Pluto'].includes(p);
+        return `<tr><td>${p}</td><td>${WSIGN[s]}</td><td class="hint" style="margin:0">${WROLE[p]}</td><td class="hint" style="margin:0">${WSUN[s]}${gen?' <i>(stays in one sign for years — this describes your whole generation, not you personally; any report pretending otherwise is padding)</i>':''}</td></tr>`;
+      }).join('')}
+    </table>
+    <p class="hint" style="margin-top:10px"><b>Midheaven</b> = the sign at the very top of the sky when you were born; Western tradition reads career direction from it: <i>${WSUN[mcSign]}</i>. <b>Weekday lord:</b> born on ${VAARA[0]}, tradition adds a flavour of ${VAARA[2]}.</p>`;
+  function wSunCalc(t){return Math.floor(t.Sun/30);}
+
+  // people & progress
+  renderPeople(sid, lagnaSign, occupants, curLord);
+
+  // SYNTHESIS — four mirrors, one honest common output
+  renderSynthesis(lagnaSign, moonSign, trop, jd, lat, lon, name);
+
+  // COMPARISON
+  const cmpRows=order.map(p=>{
+    const js=Math.floor(sid[p]/30), ws=Math.floor(trop[p]/30);
+    return {p, jy:RASHI[js].split(' ')[0], we:WSIGN[ws], same:js===ws};
+  });
+  const agree=cmpRows.filter(r=>r.same).length;
+  let numRow='';
+  if(name){
+    const c=nameNum(name,CH), pN=nameNum(name,PY);
+    numRow=`<tr><td>Name number</td><td class="mono">${c.red} (Chaldean)</td><td class="mono">${pN.red} (Pythagorean)</td><td style="color:${c.red===pN.red?'var(--leaf)':'var(--rose)'}">${c.red===pN.red?'agree':'disagree'}</td></tr>`;
+  }
+  document.getElementById('cmp-out').innerHTML=`
+    <table>
+      <tr><th>Reading</th><th>Jyotish (sidereal)</th><th>Western (tropical)</th><th>Same?</th></tr>
+      ${cmpRows.map(r=>`<tr><td>${r.p}</td><td>${r.jy}</td><td>${r.we}</td><td style="color:${r.same?'var(--leaf)':'var(--rose)'}">${r.same?'✓ agree':'✗ differ'}</td></tr>`).join('')}
+      ${numRow}
+    </table>
+    <p style="margin-top:8px"><span class="big">${agree} of ${cmpRows.length}</span> <span class="hint">planet placements agree between the two astrologies — for the same person, at the same moment, under the same sky. The rest sit in different signs depending only on which ruler you measure with.</span></p>`;
+
+  // REAL QUESTIONS
+  const RQ=[
+    {q:'“Will she / he be into ___ in bed?” (asked with a partner\'s name or birth details)',
+     why:'No chart, name, or star can reveal what another person will consent to. An answer either way is a made-up consent stamp on a real human being — and marriages have been decided on such stamps.',
+     real:'Intimate compatibility is discovered by asking, not by casting. During courtship, once trust exists: “I want us to be honest about what we each enjoy and don\'t — can we talk about that? Nothing is a wrong answer.” If the relationship cannot survive that conversation before marriage, the mismatch was never going to be solved by a chart after it.'},
+    {q:'“Will my husband / wife satisfy me the way I want?”',
+     why:'Desire is personal, changeable, and built between two specific people. It is not written in a birth detail.',
+     real:'The predictor that actually works: does this person care about your comfort and pleasure in everyday things — food, tiredness, small preferences? Someone attentive outside the bedroom usually learns to be attentive inside it. And the direct route exists here too: kind, private honesty about what you want.'},
+    {q:'“Will our open marriage work?”',
+     why:'No koota measures this; the classics never imagined the question. Any astrologer answering it is improvising.',
+     real:'Open arrangements survive on exactly three things: genuine (never pressured) agreement from both people, explicit rules both actually accept, and honest renegotiation when feelings change. If one partner is agreeing to keep the other — it has already failed. That answer costs one honest conversation, not one consultation fee.'},
+    {q:'“Will he / she take care of my parents?”',
+     why:'Future caregiving cannot be computed. But unlike the others, this one has visible evidence today.',
+     real:'Watch two things: how they treat their own parents now (the strongest predictor available), and whether they will discuss your parents\' future openly before marriage — money, living arrangements, medical decisions. Someone who dodges that conversation has answered it. Ask directly: “My parents are my responsibility. What does that look like to you after we marry?”'}
+  ];
+  document.getElementById('rq-out').innerHTML=RQ.map((r,i)=>`
+    <details class="house">
+      <summary><span class="hn">${i+1}</span><span class="ht">${r.q}</span></summary>
+      <div class="hbody">
+        <p class="trad-says"><b style="color:var(--rose)">Why no mirror will answer this:</b> ${r.why}</p>
+        <p class="reality" style="border-top:1px dotted var(--line);padding-top:8px">${r.real}</p>
+      </div>
+    </details>`).join('')+`
+    <div class="contradiction" style="border-color:var(--gold);margin-top:14px">
+      <span class="lbl" style="color:var(--gold)">The rule behind all four</span>
+      Questions about another person's body, consent, or future choices are answered by that person — never about them. This tool will hold that line even when a paying customer wants it crossed. Especially then.
+    </div>`;
+
+  // numerology
+  if(name){
+    const c=nameNum(name,CH), p=nameNum(name,PY);
+    const bday=reduce(Dd), destiny=reduce(Dd+Mo+String(Y).split('').reduce((a,x)=>a+ +x,0));
+    document.getElementById('num-out').innerHTML=`
+      <table>
+        <tr><th>Number</th><th>Chaldean</th><th>Pythagorean</th></tr>
+        <tr><td>Name number</td>
+            <td class="mono">${c.raw} → <b style="color:var(--gold)">${c.red}</b><br><span class="hint">${NUMGIST[c.red]}</span></td>
+            <td class="mono">${p.raw} → <b style="color:var(--gold)">${p.red}</b><br><span class="hint">${NUMGIST[p.red]}</span></td></tr>
+        <tr><td>Birth (psychic) number</td><td colspan="2" class="mono">${Dd} → <b style="color:var(--gold)">${bday}</b> &nbsp;<span class="hint">${NUMGIST[bday]}</span></td></tr>
+        <tr><td>Destiny number (full date)</td><td colspan="2" class="mono"><b style="color:var(--gold)">${destiny}</b> &nbsp;<span class="hint">${NUMGIST[destiny]}</span></td></tr>
+      </table>`;
+    document.getElementById('num-contra').innerHTML = c.red===p.red
+      ? '<span class="lbl">Agreement check</span>For this spelling, both schools happen to land on the same number — a coincidence of the letter values, not a confirmation. Change one letter of the spelling and watch it diverge.'
+      : `<span class="lbl">Contradiction, shown honestly</span>The two schools disagree: Chaldean says <b>${c.red}</b> (${NUMGIST[c.red]}), Pythagorean says <b>${p.red}</b> (${NUMGIST[p.red]}). Same person, same spelling, different personality verdicts. At most one can be right — and possibly neither. This is why no reading here should outrank what a person actually does.`;
+  } else {
+    document.getElementById('num-out').innerHTML='<p class="hint">No name entered — numerology skipped.</p>';
+    document.getElementById('num-contra').innerHTML='';
+  }
+
+  document.getElementById('results').style.display='block';
+  try{ document.getElementById('results').scrollIntoView({behavior:'smooth'}); }catch(e){}
+  }catch(err){
+    alert('Something went wrong while computing: '+err.message+'\n\nIf every button on this page seems dead, you are probably viewing the file inside Google Drive or WhatsApp preview, which cannot run apps. Download the file and open it with Chrome or any browser.');
+  }
+}
+</script>
+</body>
+</html>
